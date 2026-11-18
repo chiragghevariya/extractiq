@@ -1,0 +1,1447 @@
+{
+  "generated_for": "2026-11-14",
+  "vendors": [
+    {
+      "code": "V-100",
+      "name": "Kestrel Industrial Parts LLC",
+      "tax_id": "88-1234567",
+      "currency": "USD",
+      "aliases": [
+        "Kestrel Parts",
+        "KIP"
+      ]
+    },
+    {
+      "code": "V-200",
+      "name": "Brightline Office Supply Co.",
+      "tax_id": "77-7654321",
+      "currency": "USD",
+      "aliases": [
+        "Brightline Office"
+      ]
+    },
+    {
+      "code": "V-300",
+      "name": "Harbor & Pine Packaging Ltd",
+      "tax_id": "DE123456789",
+      "currency": "EUR",
+      "aliases": [
+        "Harbor and Pine",
+        "Harbour & Pine"
+      ]
+    },
+    {
+      "code": "V-400",
+      "name": "Nimbus Cloud Services Inc",
+      "tax_id": "66-1112223",
+      "currency": "USD",
+      "aliases": [
+        "Nimbus Cloud"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "sku": "KIP-1001",
+      "name": "Hex bolt M8 x 40, zinc",
+      "cost": 0.42,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-1002",
+      "name": "Flange nut M8",
+      "cost": 0.18,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-2040",
+      "name": "Bearing 6204-2RS",
+      "cost": 6.75,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-3300",
+      "name": "Hydraulic hose 1/2in x 2m",
+      "cost": 38.5,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-4100",
+      "name": "Safety gloves, cut level 5",
+      "cost": 9.9,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5001",
+      "name": "Hex bolt M6 x 30, zinc",
+      "cost": 0.28,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5002",
+      "name": "Hex bolt M6 x 60, zinc",
+      "cost": 0.41,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5003",
+      "name": "Socket cap screw M6 x 25",
+      "cost": 0.36,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5004",
+      "name": "Nyloc nut M6",
+      "cost": 0.09,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5005",
+      "name": "Flat washer M6, form A",
+      "cost": 0.03,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5006",
+      "name": "Spring washer M6",
+      "cost": 0.04,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5007",
+      "name": "Threaded rod M6 x 1m",
+      "cost": 1.6,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5008",
+      "name": "Hex bolt M8 x 30, zinc",
+      "cost": 0.42,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5009",
+      "name": "Hex bolt M8 x 60, zinc",
+      "cost": 0.6,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5010",
+      "name": "Socket cap screw M8 x 25",
+      "cost": 0.53,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5011",
+      "name": "Nyloc nut M8",
+      "cost": 0.14,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5012",
+      "name": "Flat washer M8, form A",
+      "cost": 0.05,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5013",
+      "name": "Spring washer M8",
+      "cost": 0.06,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5014",
+      "name": "Threaded rod M8 x 1m",
+      "cost": 2.5,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5015",
+      "name": "Hex bolt M10 x 30, zinc",
+      "cost": 0.56,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5016",
+      "name": "Hex bolt M10 x 60, zinc",
+      "cost": 0.79,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5017",
+      "name": "Socket cap screw M10 x 25",
+      "cost": 0.7,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5018",
+      "name": "Nyloc nut M10",
+      "cost": 0.19,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5019",
+      "name": "Flat washer M10, form A",
+      "cost": 0.07,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5020",
+      "name": "Spring washer M10",
+      "cost": 0.08,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5021",
+      "name": "Threaded rod M10 x 1m",
+      "cost": 3.4,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5022",
+      "name": "Hex bolt M12 x 30, zinc",
+      "cost": 0.7,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5023",
+      "name": "Hex bolt M12 x 60, zinc",
+      "cost": 0.98,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5024",
+      "name": "Socket cap screw M12 x 25",
+      "cost": 0.87,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5025",
+      "name": "Nyloc nut M12",
+      "cost": 0.24,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5026",
+      "name": "Flat washer M12, form A",
+      "cost": 0.09,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5027",
+      "name": "Spring washer M12",
+      "cost": 0.1,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5028",
+      "name": "Threaded rod M12 x 1m",
+      "cost": 4.3,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5029",
+      "name": "Hex bolt M16 x 30, zinc",
+      "cost": 0.84,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5030",
+      "name": "Hex bolt M16 x 60, zinc",
+      "cost": 1.17,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5031",
+      "name": "Socket cap screw M16 x 25",
+      "cost": 1.04,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5032",
+      "name": "Nyloc nut M16",
+      "cost": 0.29,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5033",
+      "name": "Flat washer M16, form A",
+      "cost": 0.11,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5034",
+      "name": "Spring washer M16",
+      "cost": 0.12,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "KIP-5035",
+      "name": "Threaded rod M16 x 1m",
+      "cost": 5.2,
+      "vendor_code": "V-100"
+    },
+    {
+      "sku": "BL-PAP-A4",
+      "name": "Copy paper A4 80gsm (box of 5 reams)",
+      "cost": 24,
+      "vendor_code": "V-200"
+    },
+    {
+      "sku": "BL-TON-26X",
+      "name": "Toner cartridge 26X",
+      "cost": 129,
+      "vendor_code": "V-200"
+    },
+    {
+      "sku": "BL-CHR-ERG",
+      "name": "Ergonomic task chair",
+      "cost": 289,
+      "vendor_code": "V-200"
+    },
+    {
+      "sku": "BL-PEN-BLU",
+      "name": "Gel pens blue (pack of 12)",
+      "cost": 7.5,
+      "vendor_code": "V-200"
+    },
+    {
+      "sku": "HP-BOX-S",
+      "name": "Corrugated box small 300x200x150",
+      "cost": 0.85,
+      "vendor_code": "V-300"
+    },
+    {
+      "sku": "HP-BOX-L",
+      "name": "Corrugated box large 600x400x400",
+      "cost": 2.1,
+      "vendor_code": "V-300"
+    },
+    {
+      "sku": "HP-TAPE-48",
+      "name": "Packing tape 48mm x 66m",
+      "cost": 1.95,
+      "vendor_code": "V-300"
+    },
+    {
+      "sku": "HP-WRAP-50",
+      "name": "Stretch wrap 500mm x 300m",
+      "cost": 18.4,
+      "vendor_code": "V-300"
+    },
+    {
+      "sku": "NCS-VM-M",
+      "name": "Managed VM medium (monthly)",
+      "cost": 145,
+      "vendor_code": "V-400"
+    },
+    {
+      "sku": "NCS-STO-1T",
+      "name": "Object storage 1 TB (monthly)",
+      "cost": 21,
+      "vendor_code": "V-400"
+    },
+    {
+      "sku": "NCS-SUP-G",
+      "name": "Gold support plan (monthly)",
+      "cost": 250,
+      "vendor_code": "V-400"
+    }
+  ],
+  "purchase_orders": [
+    {
+      "number": "PO-1001",
+      "vendor_code": "V-100",
+      "order_date": "2026-10-25",
+      "currency": "USD",
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "KIP-1001",
+          "description": "Hex bolt M8 x 40, zinc",
+          "quantity": 500,
+          "uom": "ea",
+          "unit_price": 0.42
+        },
+        {
+          "line_no": 2,
+          "sku": "KIP-1002",
+          "description": "Flange nut M8",
+          "quantity": 500,
+          "uom": "ea",
+          "unit_price": 0.18
+        },
+        {
+          "line_no": 3,
+          "sku": "KIP-2040",
+          "description": "Bearing 6204-2RS",
+          "quantity": 40,
+          "uom": "ea",
+          "unit_price": 6.75
+        }
+      ]
+    },
+    {
+      "number": "PO-1002",
+      "vendor_code": "V-200",
+      "order_date": "2026-10-30",
+      "currency": "USD",
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "BL-PAP-A4",
+          "description": "Copy paper A4 80gsm (box of 5 reams)",
+          "quantity": 20,
+          "uom": "ea",
+          "unit_price": 24
+        },
+        {
+          "line_no": 2,
+          "sku": "BL-TON-26X",
+          "description": "Toner cartridge 26X",
+          "quantity": 4,
+          "uom": "ea",
+          "unit_price": 129
+        },
+        {
+          "line_no": 3,
+          "sku": "BL-PEN-BLU",
+          "description": "Gel pens blue (pack of 12)",
+          "quantity": 10,
+          "uom": "ea",
+          "unit_price": 7.5
+        }
+      ]
+    },
+    {
+      "number": "PO-1003",
+      "vendor_code": "V-300",
+      "order_date": "2026-10-27",
+      "currency": "EUR",
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "HP-BOX-S",
+          "description": "Corrugated box small 300x200x150",
+          "quantity": 1000,
+          "uom": "ea",
+          "unit_price": 0.85
+        },
+        {
+          "line_no": 2,
+          "sku": "HP-TAPE-48",
+          "description": "Packing tape 48mm x 66m",
+          "quantity": 120,
+          "uom": "ea",
+          "unit_price": 1.95
+        }
+      ]
+    },
+    {
+      "number": "PO-1004",
+      "vendor_code": "V-100",
+      "order_date": "2026-11-04",
+      "currency": "USD",
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "KIP-3300",
+          "description": "Hydraulic hose 1/2in x 2m",
+          "quantity": 12,
+          "uom": "ea",
+          "unit_price": 38.5
+        },
+        {
+          "line_no": 2,
+          "sku": "KIP-4100",
+          "description": "Safety gloves, cut level 5",
+          "quantity": 50,
+          "uom": "ea",
+          "unit_price": 9.9
+        }
+      ]
+    },
+    {
+      "number": "PO-1005",
+      "vendor_code": "V-200",
+      "order_date": "2026-11-08",
+      "currency": "USD",
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "BL-PAP-A4",
+          "description": "Copy paper A4 80gsm (box of 5 reams)",
+          "quantity": 5,
+          "uom": "ea",
+          "unit_price": 24
+        },
+        {
+          "line_no": 2,
+          "sku": "BL-PEN-BLU",
+          "description": "Gel pens blue (pack of 12)",
+          "quantity": 4,
+          "uom": "ea",
+          "unit_price": 7.5
+        }
+      ]
+    },
+    {
+      "number": "PO-1006",
+      "vendor_code": "V-200",
+      "order_date": "2026-11-09",
+      "currency": "USD",
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "BL-TON-26X",
+          "description": "Toner cartridge 26X",
+          "quantity": 1,
+          "uom": "ea",
+          "unit_price": 129
+        }
+      ]
+    },
+    {
+      "number": "PO-1007",
+      "vendor_code": "V-400",
+      "order_date": "2026-10-20",
+      "currency": "USD",
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "NCS-VM-M",
+          "description": "Managed VM medium (monthly)",
+          "quantity": 3,
+          "uom": "ea",
+          "unit_price": 145
+        },
+        {
+          "line_no": 2,
+          "sku": "NCS-STO-1T",
+          "description": "Object storage 1 TB (monthly)",
+          "quantity": 2,
+          "uom": "ea",
+          "unit_price": 21
+        },
+        {
+          "line_no": 3,
+          "sku": "NCS-SUP-G",
+          "description": "Gold support plan (monthly)",
+          "quantity": 1,
+          "uom": "ea",
+          "unit_price": 250
+        }
+      ]
+    },
+    {
+      "number": "PO-1008",
+      "vendor_code": "V-100",
+      "order_date": "2026-10-31",
+      "currency": "USD",
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "KIP-2040",
+          "description": "Bearing 6204-2RS",
+          "quantity": 40,
+          "uom": "ea",
+          "unit_price": 6.75
+        },
+        {
+          "line_no": 2,
+          "sku": "KIP-3300",
+          "description": "Hydraulic hose 1/2in x 2m",
+          "quantity": 10,
+          "uom": "ea",
+          "unit_price": 38.5
+        },
+        {
+          "line_no": 3,
+          "sku": "KIP-4100",
+          "description": "Safety gloves, cut level 5",
+          "quantity": 100,
+          "uom": "ea",
+          "unit_price": 9.9
+        }
+      ]
+    },
+    {
+      "number": "PO-1009",
+      "vendor_code": "V-200",
+      "order_date": "2026-11-05",
+      "currency": "USD",
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "BL-PAP-A4",
+          "description": "Copy paper A4 80gsm (box of 5 reams)",
+          "quantity": 30,
+          "uom": "ea",
+          "unit_price": 24
+        },
+        {
+          "line_no": 2,
+          "sku": "BL-TON-26X",
+          "description": "Toner cartridge 26X",
+          "quantity": 6,
+          "uom": "ea",
+          "unit_price": 129
+        }
+      ]
+    },
+    {
+      "number": "PO-1010",
+      "vendor_code": "V-300",
+      "order_date": "2026-11-02",
+      "currency": "EUR",
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "HP-WRAP-50",
+          "description": "Stretch wrap 500mm x 300m",
+          "quantity": 10,
+          "uom": "ea",
+          "unit_price": 18.4
+        }
+      ]
+    },
+    {
+      "number": "PO-2001",
+      "vendor_code": "V-100",
+      "order_date": "2026-11-03",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "KIP-2040",
+          "description": "Bearing 6204-2RS",
+          "quantity": 2,
+          "uom": "ea",
+          "unit_price": 6.75
+        },
+        {
+          "line_no": 2,
+          "sku": "KIP-1001",
+          "description": "Hex bolt M8 x 40, zinc",
+          "quantity": 712,
+          "uom": "ea",
+          "unit_price": 0.42
+        }
+      ]
+    },
+    {
+      "number": "PO-2002",
+      "vendor_code": "V-400",
+      "order_date": "2026-11-04",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "NCS-STO-1T",
+          "description": "Object storage 1 TB (monthly)",
+          "quantity": 20,
+          "uom": "ea",
+          "unit_price": 21
+        },
+        {
+          "line_no": 2,
+          "sku": "NCS-VM-M",
+          "description": "Managed VM medium (monthly)",
+          "quantity": 17,
+          "uom": "ea",
+          "unit_price": 145
+        }
+      ]
+    },
+    {
+      "number": "PO-2003",
+      "vendor_code": "V-300",
+      "order_date": "2026-10-20",
+      "currency": "EUR",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "HP-BOX-S",
+          "description": "Corrugated box small 300x200x150",
+          "quantity": 96,
+          "uom": "ea",
+          "unit_price": 0.85
+        }
+      ]
+    },
+    {
+      "number": "PO-2004",
+      "vendor_code": "V-200",
+      "order_date": "2026-11-01",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "BL-TON-26X",
+          "description": "Toner cartridge 26X",
+          "quantity": 15,
+          "uom": "ea",
+          "unit_price": 129
+        }
+      ]
+    },
+    {
+      "number": "PO-2005",
+      "vendor_code": "V-100",
+      "order_date": "2026-11-05",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "KIP-5001",
+          "description": "Hex bolt M6 x 30, zinc",
+          "quantity": 450,
+          "uom": "ea",
+          "unit_price": 0.28
+        },
+        {
+          "line_no": 2,
+          "sku": "KIP-5002",
+          "description": "Hex bolt M6 x 60, zinc",
+          "quantity": 250,
+          "uom": "ea",
+          "unit_price": 0.41
+        },
+        {
+          "line_no": 3,
+          "sku": "KIP-5003",
+          "description": "Socket cap screw M6 x 25",
+          "quantity": 450,
+          "uom": "ea",
+          "unit_price": 0.36
+        },
+        {
+          "line_no": 4,
+          "sku": "KIP-5004",
+          "description": "Nyloc nut M6",
+          "quantity": 300,
+          "uom": "ea",
+          "unit_price": 0.09
+        },
+        {
+          "line_no": 5,
+          "sku": "KIP-5005",
+          "description": "Flat washer M6, form A",
+          "quantity": 300,
+          "uom": "ea",
+          "unit_price": 0.03
+        },
+        {
+          "line_no": 6,
+          "sku": "KIP-5006",
+          "description": "Spring washer M6",
+          "quantity": 350,
+          "uom": "ea",
+          "unit_price": 0.04
+        },
+        {
+          "line_no": 7,
+          "sku": "KIP-5007",
+          "description": "Threaded rod M6 x 1m",
+          "quantity": 500,
+          "uom": "ea",
+          "unit_price": 1.6
+        },
+        {
+          "line_no": 8,
+          "sku": "KIP-5008",
+          "description": "Hex bolt M8 x 30, zinc",
+          "quantity": 400,
+          "uom": "ea",
+          "unit_price": 0.42
+        },
+        {
+          "line_no": 9,
+          "sku": "KIP-5009",
+          "description": "Hex bolt M8 x 60, zinc",
+          "quantity": 150,
+          "uom": "ea",
+          "unit_price": 0.6
+        },
+        {
+          "line_no": 10,
+          "sku": "KIP-5010",
+          "description": "Socket cap screw M8 x 25",
+          "quantity": 175,
+          "uom": "ea",
+          "unit_price": 0.53
+        },
+        {
+          "line_no": 11,
+          "sku": "KIP-5011",
+          "description": "Nyloc nut M8",
+          "quantity": 100,
+          "uom": "ea",
+          "unit_price": 0.14
+        },
+        {
+          "line_no": 12,
+          "sku": "KIP-5012",
+          "description": "Flat washer M8, form A",
+          "quantity": 400,
+          "uom": "ea",
+          "unit_price": 0.05
+        },
+        {
+          "line_no": 13,
+          "sku": "KIP-5013",
+          "description": "Spring washer M8",
+          "quantity": 450,
+          "uom": "ea",
+          "unit_price": 0.06
+        },
+        {
+          "line_no": 14,
+          "sku": "KIP-5014",
+          "description": "Threaded rod M8 x 1m",
+          "quantity": 50,
+          "uom": "ea",
+          "unit_price": 2.5
+        },
+        {
+          "line_no": 15,
+          "sku": "KIP-5015",
+          "description": "Hex bolt M10 x 30, zinc",
+          "quantity": 325,
+          "uom": "ea",
+          "unit_price": 0.56
+        },
+        {
+          "line_no": 16,
+          "sku": "KIP-5016",
+          "description": "Hex bolt M10 x 60, zinc",
+          "quantity": 475,
+          "uom": "ea",
+          "unit_price": 0.79
+        },
+        {
+          "line_no": 17,
+          "sku": "KIP-5017",
+          "description": "Socket cap screw M10 x 25",
+          "quantity": 50,
+          "uom": "ea",
+          "unit_price": 0.7
+        },
+        {
+          "line_no": 18,
+          "sku": "KIP-5018",
+          "description": "Nyloc nut M10",
+          "quantity": 275,
+          "uom": "ea",
+          "unit_price": 0.19
+        },
+        {
+          "line_no": 19,
+          "sku": "KIP-5019",
+          "description": "Flat washer M10, form A",
+          "quantity": 300,
+          "uom": "ea",
+          "unit_price": 0.07
+        },
+        {
+          "line_no": 20,
+          "sku": "KIP-5020",
+          "description": "Spring washer M10",
+          "quantity": 275,
+          "uom": "ea",
+          "unit_price": 0.08
+        },
+        {
+          "line_no": 21,
+          "sku": "KIP-5021",
+          "description": "Threaded rod M10 x 1m",
+          "quantity": 425,
+          "uom": "ea",
+          "unit_price": 3.4
+        },
+        {
+          "line_no": 22,
+          "sku": "KIP-5022",
+          "description": "Hex bolt M12 x 30, zinc",
+          "quantity": 425,
+          "uom": "ea",
+          "unit_price": 0.7
+        },
+        {
+          "line_no": 23,
+          "sku": "KIP-5023",
+          "description": "Hex bolt M12 x 60, zinc",
+          "quantity": 225,
+          "uom": "ea",
+          "unit_price": 0.98
+        },
+        {
+          "line_no": 24,
+          "sku": "KIP-5024",
+          "description": "Socket cap screw M12 x 25",
+          "quantity": 300,
+          "uom": "ea",
+          "unit_price": 0.87
+        },
+        {
+          "line_no": 25,
+          "sku": "KIP-5025",
+          "description": "Nyloc nut M12",
+          "quantity": 450,
+          "uom": "ea",
+          "unit_price": 0.24
+        },
+        {
+          "line_no": 26,
+          "sku": "KIP-5026",
+          "description": "Flat washer M12, form A",
+          "quantity": 75,
+          "uom": "ea",
+          "unit_price": 0.09
+        },
+        {
+          "line_no": 27,
+          "sku": "KIP-5027",
+          "description": "Spring washer M12",
+          "quantity": 250,
+          "uom": "ea",
+          "unit_price": 0.1
+        },
+        {
+          "line_no": 28,
+          "sku": "KIP-5028",
+          "description": "Threaded rod M12 x 1m",
+          "quantity": 225,
+          "uom": "ea",
+          "unit_price": 4.3
+        },
+        {
+          "line_no": 29,
+          "sku": "KIP-5029",
+          "description": "Hex bolt M16 x 30, zinc",
+          "quantity": 450,
+          "uom": "ea",
+          "unit_price": 0.84
+        },
+        {
+          "line_no": 30,
+          "sku": "KIP-5030",
+          "description": "Hex bolt M16 x 60, zinc",
+          "quantity": 425,
+          "uom": "ea",
+          "unit_price": 1.17
+        },
+        {
+          "line_no": 31,
+          "sku": "KIP-5031",
+          "description": "Socket cap screw M16 x 25",
+          "quantity": 450,
+          "uom": "ea",
+          "unit_price": 1.04
+        },
+        {
+          "line_no": 32,
+          "sku": "KIP-5032",
+          "description": "Nyloc nut M16",
+          "quantity": 100,
+          "uom": "ea",
+          "unit_price": 0.29
+        },
+        {
+          "line_no": 33,
+          "sku": "KIP-5033",
+          "description": "Flat washer M16, form A",
+          "quantity": 175,
+          "uom": "ea",
+          "unit_price": 0.11
+        },
+        {
+          "line_no": 34,
+          "sku": "KIP-5034",
+          "description": "Spring washer M16",
+          "quantity": 250,
+          "uom": "ea",
+          "unit_price": 0.12
+        },
+        {
+          "line_no": 35,
+          "sku": "KIP-5035",
+          "description": "Threaded rod M16 x 1m",
+          "quantity": 150,
+          "uom": "ea",
+          "unit_price": 5.2
+        },
+        {
+          "line_no": 36,
+          "sku": "KIP-1001",
+          "description": "Hex bolt M8 x 40, zinc",
+          "quantity": 400,
+          "uom": "ea",
+          "unit_price": 0.42
+        },
+        {
+          "line_no": 37,
+          "sku": "KIP-1002",
+          "description": "Flange nut M8",
+          "quantity": 400,
+          "uom": "ea",
+          "unit_price": 0.18
+        },
+        {
+          "line_no": 38,
+          "sku": "KIP-2040",
+          "description": "Bearing 6204-2RS",
+          "quantity": 24,
+          "uom": "ea",
+          "unit_price": 6.75
+        },
+        {
+          "line_no": 39,
+          "sku": "KIP-3300",
+          "description": "Hydraulic hose 1/2in x 2m",
+          "quantity": 4,
+          "uom": "ea",
+          "unit_price": 38.5
+        },
+        {
+          "line_no": 40,
+          "sku": "KIP-4100",
+          "description": "Safety gloves, cut level 5",
+          "quantity": 60,
+          "uom": "ea",
+          "unit_price": 9.9
+        }
+      ]
+    },
+    {
+      "number": "PO-2006",
+      "vendor_code": "V-300",
+      "order_date": "2026-10-08",
+      "currency": "EUR",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "HP-BOX-S",
+          "description": "Corrugated box small 300x200x150",
+          "quantity": 655,
+          "uom": "ea",
+          "unit_price": 0.85
+        },
+        {
+          "line_no": 2,
+          "sku": "HP-BOX-L",
+          "description": "Corrugated box large 600x400x400",
+          "quantity": 231,
+          "uom": "ea",
+          "unit_price": 2.1
+        }
+      ]
+    },
+    {
+      "number": "PO-2007",
+      "vendor_code": "V-400",
+      "order_date": "2026-10-05",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "NCS-VM-M",
+          "description": "Managed VM medium (monthly)",
+          "quantity": 8,
+          "uom": "ea",
+          "unit_price": 145
+        },
+        {
+          "line_no": 2,
+          "sku": "NCS-STO-1T",
+          "description": "Object storage 1 TB (monthly)",
+          "quantity": 11,
+          "uom": "ea",
+          "unit_price": 21
+        },
+        {
+          "line_no": 3,
+          "sku": "NCS-SUP-G",
+          "description": "Gold support plan (monthly)",
+          "quantity": 1,
+          "uom": "ea",
+          "unit_price": 250
+        }
+      ]
+    },
+    {
+      "number": "PO-2008",
+      "vendor_code": "V-200",
+      "order_date": "2026-11-06",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "BL-PAP-A4",
+          "description": "Copy paper A4 80gsm (box of 5 reams)",
+          "quantity": 23,
+          "uom": "ea",
+          "unit_price": 24
+        }
+      ]
+    },
+    {
+      "number": "PO-2009",
+      "vendor_code": "V-100",
+      "order_date": "2026-11-09",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "KIP-1001",
+          "description": "Hex bolt M8 x 40, zinc",
+          "quantity": 440,
+          "uom": "ea",
+          "unit_price": 0.42
+        },
+        {
+          "line_no": 2,
+          "sku": "KIP-1002",
+          "description": "Flange nut M8",
+          "quantity": 277,
+          "uom": "ea",
+          "unit_price": 0.18
+        },
+        {
+          "line_no": 3,
+          "sku": "KIP-3300",
+          "description": "Hydraulic hose 1/2in x 2m",
+          "quantity": 4,
+          "uom": "ea",
+          "unit_price": 38.5
+        },
+        {
+          "line_no": 4,
+          "sku": "KIP-2040",
+          "description": "Bearing 6204-2RS",
+          "quantity": 5,
+          "uom": "ea",
+          "unit_price": 6.75
+        }
+      ]
+    },
+    {
+      "number": "PO-2010",
+      "vendor_code": "V-400",
+      "order_date": "2026-10-25",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "NCS-VM-M",
+          "description": "Managed VM medium (monthly)",
+          "quantity": 9,
+          "uom": "ea",
+          "unit_price": 145
+        },
+        {
+          "line_no": 2,
+          "sku": "NCS-STO-1T",
+          "description": "Object storage 1 TB (monthly)",
+          "quantity": 17,
+          "uom": "ea",
+          "unit_price": 21
+        },
+        {
+          "line_no": 3,
+          "sku": "NCS-SUP-G",
+          "description": "Gold support plan (monthly)",
+          "quantity": 27,
+          "uom": "ea",
+          "unit_price": 250
+        }
+      ]
+    },
+    {
+      "number": "PO-2011",
+      "vendor_code": "V-300",
+      "order_date": "2026-10-29",
+      "currency": "EUR",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "HP-WRAP-50",
+          "description": "Stretch wrap 500mm x 300m",
+          "quantity": 28,
+          "uom": "ea",
+          "unit_price": 18.4
+        },
+        {
+          "line_no": 2,
+          "sku": "HP-TAPE-48",
+          "description": "Packing tape 48mm x 66m",
+          "quantity": 63,
+          "uom": "ea",
+          "unit_price": 1.95
+        },
+        {
+          "line_no": 3,
+          "sku": "HP-BOX-L",
+          "description": "Corrugated box large 600x400x400",
+          "quantity": 696,
+          "uom": "ea",
+          "unit_price": 2.1
+        },
+        {
+          "line_no": 4,
+          "sku": "HP-BOX-S",
+          "description": "Corrugated box small 300x200x150",
+          "quantity": 673,
+          "uom": "ea",
+          "unit_price": 0.85
+        }
+      ]
+    },
+    {
+      "number": "PO-2012",
+      "vendor_code": "V-200",
+      "order_date": "2026-10-31",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "BL-CHR-ERG",
+          "description": "Ergonomic task chair",
+          "quantity": 15,
+          "uom": "ea",
+          "unit_price": 289
+        },
+        {
+          "line_no": 2,
+          "sku": "BL-PEN-BLU",
+          "description": "Gel pens blue (pack of 12)",
+          "quantity": 14,
+          "uom": "ea",
+          "unit_price": 7.5
+        }
+      ]
+    },
+    {
+      "number": "PO-2013",
+      "vendor_code": "V-100",
+      "order_date": "2026-10-14",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "KIP-4100",
+          "description": "Safety gloves, cut level 5",
+          "quantity": 28,
+          "uom": "ea",
+          "unit_price": 9.9
+        },
+        {
+          "line_no": 2,
+          "sku": "KIP-3300",
+          "description": "Hydraulic hose 1/2in x 2m",
+          "quantity": 6,
+          "uom": "ea",
+          "unit_price": 38.5
+        },
+        {
+          "line_no": 3,
+          "sku": "KIP-2040",
+          "description": "Bearing 6204-2RS",
+          "quantity": 4,
+          "uom": "ea",
+          "unit_price": 6.75
+        },
+        {
+          "line_no": 4,
+          "sku": "KIP-1002",
+          "description": "Flange nut M8",
+          "quantity": 329,
+          "uom": "ea",
+          "unit_price": 0.18
+        }
+      ]
+    },
+    {
+      "number": "PO-2014",
+      "vendor_code": "V-400",
+      "order_date": "2026-10-30",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "NCS-SUP-G",
+          "description": "Gold support plan (monthly)",
+          "quantity": 7,
+          "uom": "ea",
+          "unit_price": 250
+        },
+        {
+          "line_no": 2,
+          "sku": "NCS-STO-1T",
+          "description": "Object storage 1 TB (monthly)",
+          "quantity": 6,
+          "uom": "ea",
+          "unit_price": 21
+        }
+      ]
+    },
+    {
+      "number": "PO-2015",
+      "vendor_code": "V-300",
+      "order_date": "2026-11-07",
+      "currency": "EUR",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "HP-WRAP-50",
+          "description": "Stretch wrap 500mm x 300m",
+          "quantity": 27,
+          "uom": "ea",
+          "unit_price": 18.4
+        },
+        {
+          "line_no": 2,
+          "sku": "HP-TAPE-48",
+          "description": "Packing tape 48mm x 66m",
+          "quantity": 328,
+          "uom": "ea",
+          "unit_price": 1.95
+        },
+        {
+          "line_no": 3,
+          "sku": "HP-BOX-L",
+          "description": "Corrugated box large 600x400x400",
+          "quantity": 483,
+          "uom": "ea",
+          "unit_price": 2.1
+        }
+      ]
+    },
+    {
+      "number": "PO-2016",
+      "vendor_code": "V-200",
+      "order_date": "2026-10-18",
+      "currency": "USD",
+      "bulk": true,
+      "lines": [
+        {
+          "line_no": 1,
+          "sku": "BL-PAP-A4",
+          "description": "Copy paper A4 80gsm (box of 5 reams)",
+          "quantity": 27,
+          "uom": "ea",
+          "unit_price": 24
+        },
+        {
+          "line_no": 2,
+          "sku": "BL-TON-26X",
+          "description": "Toner cartridge 26X",
+          "quantity": 9,
+          "uom": "ea",
+          "unit_price": 129
+        }
+      ]
+    }
+  ],
+  "receipts": [
+    {
+      "number": "GRN-5001",
+      "po_number": "PO-1001",
+      "received_date": "2026-11-02",
+      "lines": [
+        {
+          "line_no": 1,
+          "po_line_no": 1,
+          "sku": "KIP-1001",
+          "description": "Hex bolt M8 x 40, zinc",
+          "quantity": 500
+        },
+        {
+          "line_no": 2,
+          "po_line_no": 2,
+          "sku": "KIP-1002",
+          "description": "Flange nut M8",
+          "quantity": 500
+        },
+        {
+          "line_no": 3,
+          "po_line_no": 3,
+          "sku": "KIP-2040",
+          "description": "Bearing 6204-2RS",
+          "quantity": 40
+        }
+      ]
+    },
+    {
+      "number": "GRN-5003",
+      "po_number": "PO-1003",
+      "received_date": "2026-11-06",
+      "lines": [
+        {
+          "line_no": 1,
+          "po_line_no": 1,
+          "sku": "HP-BOX-S",
+          "description": "Corrugated box small 300x200x150",
+          "quantity": 800
+        },
+        {
+          "line_no": 2,
+          "po_line_no": 2,
+          "sku": "HP-TAPE-48",
+          "description": "Packing tape 48mm x 66m",
+          "quantity": 120
+        }
+      ]
+    },
+    {
+      "number": "GRN-5008",
+      "po_number": "PO-1008",
+      "received_date": "2026-11-08",
+      "lines": [
+        {
+          "line_no": 1,
+          "po_line_no": 1,
+          "sku": "KIP-2040",
+          "description": "Bearing 6204-2RS",
+          "quantity": 40
+        },
+        {
+          "line_no": 2,
+          "po_line_no": 2,
+          "sku": "KIP-3300",
+          "description": "Hydraulic hose 1/2in x 2m",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "number": "GRN-5010",
+      "po_number": "PO-1010",
+      "received_date": "2026-11-09",
+      "lines": [
+        {
+          "line_no": 1,
+          "po_line_no": 1,
+          "sku": "HP-WRAP-50",
+          "description": "Stretch wrap 500mm x 300m",
+          "quantity": 10
+        }
+      ]
+    }
+  ]
+}

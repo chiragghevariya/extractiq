@@ -1,0 +1,10 @@
+po_number,vendor,order_date,currency,line_no,sku,description,quantity,uom,unit_price
+PO-1007,V-400,2026-10-20,USD,1,NCS-VM-M,Managed VM medium (monthly),3,ea,145.00
+PO-1007,V-400,2026-10-20,USD,2,NCS-STO-1T,Object storage 1 TB (monthly),2,ea,21.00
+PO-1007,V-400,2026-10-20,USD,3,NCS-SUP-G,Gold support plan (monthly),1,ea,250.00
+PO-1008,V-100,2026-10-31,USD,1,KIP-2040,Bearing 6204-2RS,40,ea,6.75
+PO-1008,V-100,2026-10-31,USD,2,KIP-3300,Hydraulic hose 1/2in x 2m,10,ea,38.50
+PO-1008,V-100,2026-10-31,USD,3,KIP-4100,"Safety gloves, cut level 5",100,ea,9.90
+PO-1009,V-200,2026-11-05,USD,1,BL-PAP-A4,Copy paper A4 80gsm (box of 5 reams),30,ea,24.00
+PO-1009,V-200,2026-11-05,USD,2,BL-TON-26X,Toner cartridge 26X,6,ea,129.00
+PO-1010,V-300,2026-11-02,EUR,1,HP-WRAP-50,Stretch wrap 500mm x 300m,10,ea,18.40

@@ -1,0 +1,1171 @@
+{
+    "source": "12-inv-bl-7790-brightline-total-mismatch.pdf",
+    "mime": "application/pdf",
+    "ocr_text": "INVOICE                                                                                  Brightline Office Supply Co.\n                                                                                                       9 Paper Mill Lane\nSAMPLE DOCUMENT - FICTIONAL DATA                                                                     Lakeside, ST 00002\n\n\n\nInvoice No: INV-BL-7790\nInvoice Date: 2026-11-12\nDue Date: 2026-12-12\nPO Number: PO-1002\nVendor: Brightline Office Supply Co.\nBill To: Demo Manufacturing Co.\nCurrency: USD\nTax ID: 77-7654321\n\n SKU             Description                                                  Qty Unit Price        Amount\n\n BL-CHR-ERG      Ergonomic task chair                                            2       289.00     578.00\n\n\n                                                                                                       Subtotal: 578.00\n                                                                                                       Tax (8%): 46.24\n                                                                                                         Total: 674.24\n\n\n\n\n                                       Please pay by 2026-12-12. Bank details on file.",
+    "pages": [
+        {
+            "page_number": 1,
+            "provider": "pdftext",
+            "text": "INVOICE                                                                                  Brightline Office Supply Co.\n                                                                                                       9 Paper Mill Lane\nSAMPLE DOCUMENT - FICTIONAL DATA                                                                     Lakeside, ST 00002\n\n\n\nInvoice No: INV-BL-7790\nInvoice Date: 2026-11-12\nDue Date: 2026-12-12\nPO Number: PO-1002\nVendor: Brightline Office Supply Co.\nBill To: Demo Manufacturing Co.\nCurrency: USD\nTax ID: 77-7654321\n\n SKU             Description                                                  Qty Unit Price        Amount\n\n BL-CHR-ERG      Ergonomic task chair                                            2       289.00     578.00\n\n\n                                                                                                       Subtotal: 578.00\n                                                                                                       Tax (8%): 46.24\n                                                                                                         Total: 674.24\n\n\n\n\n                                       Please pay by 2026-12-12. Bank details on file.",
+            "ocr": {
+                "words": [
+                    {
+                        "text": "INVOICE",
+                        "bbox": [
+                            0.084,
+                            0.0475,
+                            0.1501,
+                            0.0242
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Brightline",
+                        "bbox": [
+                            0.6704,
+                            0.0475,
+                            0.0862,
+                            0.0121
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Office",
+                        "bbox": [
+                            0.7618,
+                            0.0475,
+                            0.0524,
+                            0.0121
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Supply",
+                        "bbox": [
+                            0.8193,
+                            0.0475,
+                            0.0613,
+                            0.0121
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Co.",
+                        "bbox": [
+                            0.8858,
+                            0.0475,
+                            0.0298,
+                            0.0121
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "9",
+                        "bbox": [
+                            0.7985,
+                            0.0665,
+                            0.0084,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Paper",
+                        "bbox": [
+                            0.8111,
+                            0.0665,
+                            0.0397,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Mill",
+                        "bbox": [
+                            0.855,
+                            0.0665,
+                            0.0227,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Lane",
+                        "bbox": [
+                            0.8819,
+                            0.0665,
+                            0.0336,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Lakeside,",
+                        "bbox": [
+                            0.7816,
+                            0.0789,
+                            0.0642,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "ST",
+                        "bbox": [
+                            0.85,
+                            0.0789,
+                            0.0193,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "00002",
+                        "bbox": [
+                            0.8735,
+                            0.0789,
+                            0.042,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "SAMPLE",
+                        "bbox": [
+                            0.084,
+                            0.0808,
+                            0.0613,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "DOCUMENT",
+                        "bbox": [
+                            0.1495,
+                            0.0808,
+                            0.0873,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "-",
+                        "bbox": [
+                            0.2411,
+                            0.0808,
+                            0.005,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "FICTIONAL",
+                        "bbox": [
+                            0.2503,
+                            0.0808,
+                            0.079,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "DATA",
+                        "bbox": [
+                            0.3335,
+                            0.0808,
+                            0.0361,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Invoice",
+                        "bbox": [
+                            0.084,
+                            0.1307,
+                            0.0525,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "No:",
+                        "bbox": [
+                            0.1411,
+                            0.1307,
+                            0.0261,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "INV-BL-7790",
+                        "bbox": [
+                            0.1711,
+                            0.1307,
+                            0.0958,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Invoice",
+                        "bbox": [
+                            0.084,
+                            0.1485,
+                            0.0525,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Date:",
+                        "bbox": [
+                            0.1411,
+                            0.1485,
+                            0.0401,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "2026-11-12",
+                        "bbox": [
+                            0.1851,
+                            0.1485,
+                            0.0859,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Due",
+                        "bbox": [
+                            0.084,
+                            0.1663,
+                            0.0308,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Date:",
+                        "bbox": [
+                            0.1195,
+                            0.1663,
+                            0.0401,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "2026-12-12",
+                        "bbox": [
+                            0.1635,
+                            0.1663,
+                            0.0859,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "PO",
+                        "bbox": [
+                            0.084,
+                            0.1841,
+                            0.0243,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Number:",
+                        "bbox": [
+                            0.1129,
+                            0.1841,
+                            0.0649,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "PO-1002",
+                        "bbox": [
+                            0.1817,
+                            0.1841,
+                            0.0672,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Vendor:",
+                        "bbox": [
+                            0.084,
+                            0.2019,
+                            0.058,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Brightline",
+                        "bbox": [
+                            0.1458,
+                            0.2019,
+                            0.0703,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Office",
+                        "bbox": [
+                            0.2208,
+                            0.2019,
+                            0.0439,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Supply",
+                        "bbox": [
+                            0.2693,
+                            0.2019,
+                            0.0514,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Co.",
+                        "bbox": [
+                            0.3253,
+                            0.2019,
+                            0.0255,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Bill",
+                        "bbox": [
+                            0.084,
+                            0.2197,
+                            0.0224,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "To:",
+                        "bbox": [
+                            0.1102,
+                            0.2197,
+                            0.0223,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Demo",
+                        "bbox": [
+                            0.1363,
+                            0.2197,
+                            0.0448,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Manufacturing",
+                        "bbox": [
+                            0.1858,
+                            0.2197,
+                            0.106,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Co.",
+                        "bbox": [
+                            0.2965,
+                            0.2197,
+                            0.0255,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Currency:",
+                        "bbox": [
+                            0.084,
+                            0.2376,
+                            0.0728,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "USD",
+                        "bbox": [
+                            0.1606,
+                            0.2376,
+                            0.0355,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Tax",
+                        "bbox": [
+                            0.084,
+                            0.2554,
+                            0.026,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "ID:",
+                        "bbox": [
+                            0.1147,
+                            0.2554,
+                            0.0215,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "77-7654321",
+                        "bbox": [
+                            0.14,
+                            0.2554,
+                            0.0897,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "SKU",
+                        "bbox": [
+                            0.0941,
+                            0.291,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Description",
+                        "bbox": [
+                            0.212,
+                            0.291,
+                            0.0998,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Qty",
+                        "bbox": [
+                            0.593,
+                            0.291,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Unit",
+                        "bbox": [
+                            0.6293,
+                            0.291,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Price",
+                        "bbox": [
+                            0.6746,
+                            0.291,
+                            0.0454,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "BL-CHR-ERG",
+                        "bbox": [
+                            0.0941,
+                            0.3171,
+                            0.0907,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Ergonomic",
+                        "bbox": [
+                            0.212,
+                            0.3171,
+                            0.0816,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "task",
+                        "bbox": [
+                            0.3027,
+                            0.3171,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "chair",
+                        "bbox": [
+                            0.3481,
+                            0.3171,
+                            0.0454,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "2",
+                        "bbox": [
+                            0.6111,
+                            0.3171,
+                            0.0091,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "289.00",
+                        "bbox": [
+                            0.6656,
+                            0.3171,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Amount",
+                        "bbox": [
+                            0.7744,
+                            0.291,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "578.00",
+                        "bbox": [
+                            0.7744,
+                            0.3171,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Subtotal:",
+                        "bbox": [
+                            0.794,
+                            0.3516,
+                            0.0663,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "578.00",
+                        "bbox": [
+                            0.8642,
+                            0.3516,
+                            0.0514,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Tax",
+                        "bbox": [
+                            0.7989,
+                            0.3706,
+                            0.026,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "(8%):",
+                        "bbox": [
+                            0.8295,
+                            0.3706,
+                            0.0401,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "46.24",
+                        "bbox": [
+                            0.8735,
+                            0.3706,
+                            0.042,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Total:",
+                        "bbox": [
+                            0.8158,
+                            0.3896,
+                            0.0444,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "674.24",
+                        "bbox": [
+                            0.8642,
+                            0.3896,
+                            0.0514,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Please",
+                        "bbox": [
+                            0.3602,
+                            0.9146,
+                            0.0411,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "pay",
+                        "bbox": [
+                            0.405,
+                            0.9146,
+                            0.0213,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "by",
+                        "bbox": [
+                            0.43,
+                            0.9146,
+                            0.0139,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "2026-12-12.",
+                        "bbox": [
+                            0.4476,
+                            0.9146,
+                            0.0725,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Bank",
+                        "bbox": [
+                            0.523,
+                            0.9146,
+                            0.0306,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "details",
+                        "bbox": [
+                            0.5574,
+                            0.9146,
+                            0.0388,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "on",
+                        "bbox": [
+                            0.6,
+                            0.9146,
+                            0.0149,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "file.",
+                        "bbox": [
+                            0.6187,
+                            0.9146,
+                            0.0207,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    }
+                ],
+                "lines": [
+                    {
+                        "text": "INVOICE",
+                        "bbox": [
+                            0.084,
+                            0.0475,
+                            0.1501,
+                            0.0242
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Brightline Office Supply Co.",
+                        "bbox": [
+                            0.6704,
+                            0.0475,
+                            0.2452,
+                            0.0121
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "9 Paper Mill Lane",
+                        "bbox": [
+                            0.7985,
+                            0.0665,
+                            0.117,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Lakeside, ST 00002",
+                        "bbox": [
+                            0.7816,
+                            0.0789,
+                            0.1339,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "SAMPLE DOCUMENT - FICTIONAL DATA",
+                        "bbox": [
+                            0.084,
+                            0.0808,
+                            0.2856,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Invoice No: INV-BL-7790",
+                        "bbox": [
+                            0.084,
+                            0.1307,
+                            0.1829,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Invoice Date: 2026-11-12",
+                        "bbox": [
+                            0.084,
+                            0.1485,
+                            0.187,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Due Date: 2026-12-12",
+                        "bbox": [
+                            0.084,
+                            0.1663,
+                            0.1654,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "PO Number: PO-1002",
+                        "bbox": [
+                            0.084,
+                            0.1841,
+                            0.1649,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Vendor: Brightline Office Supply Co.",
+                        "bbox": [
+                            0.084,
+                            0.2019,
+                            0.2668,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Bill To: Demo Manufacturing Co.",
+                        "bbox": [
+                            0.084,
+                            0.2197,
+                            0.238,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Currency: USD",
+                        "bbox": [
+                            0.084,
+                            0.2376,
+                            0.1121,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Tax ID: 77-7654321",
+                        "bbox": [
+                            0.084,
+                            0.2554,
+                            0.1457,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "SKU",
+                        "bbox": [
+                            0.0941,
+                            0.291,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Description",
+                        "bbox": [
+                            0.212,
+                            0.291,
+                            0.0998,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Qty Unit Price",
+                        "bbox": [
+                            0.593,
+                            0.291,
+                            0.127,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Amount",
+                        "bbox": [
+                            0.7744,
+                            0.291,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "BL-CHR-ERG",
+                        "bbox": [
+                            0.0941,
+                            0.3171,
+                            0.0907,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Ergonomic task chair",
+                        "bbox": [
+                            0.212,
+                            0.3171,
+                            0.1815,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "2",
+                        "bbox": [
+                            0.6111,
+                            0.3171,
+                            0.0091,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "289.00",
+                        "bbox": [
+                            0.6656,
+                            0.3171,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "578.00",
+                        "bbox": [
+                            0.7744,
+                            0.3171,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Subtotal: 578.00",
+                        "bbox": [
+                            0.794,
+                            0.3516,
+                            0.1216,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Tax (8%): 46.24",
+                        "bbox": [
+                            0.7989,
+                            0.3706,
+                            0.1166,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Total: 674.24",
+                        "bbox": [
+                            0.8158,
+                            0.3896,
+                            0.0998,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Please pay by 2026-12-12. Bank details on file.",
+                        "bbox": [
+                            0.3602,
+                            0.9146,
+                            0.2792,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    }
+                ],
+                "key_values": [
+                    {
+                        "key": "Invoice No",
+                        "value": "INV-BL-7790",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.1307,
+                            0.0832,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1711,
+                            0.1307,
+                            0.0958,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Invoice Date",
+                        "value": "2026-11-12",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.1485,
+                            0.0972,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1851,
+                            0.1485,
+                            0.0859,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Due Date",
+                        "value": "2026-12-12",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.1663,
+                            0.0756,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1635,
+                            0.1663,
+                            0.0859,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "PO Number",
+                        "value": "PO-1002",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.1841,
+                            0.0938,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1817,
+                            0.1841,
+                            0.0672,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Vendor",
+                        "value": "Brightline Office Supply Co.",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.2019,
+                            0.058,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1458,
+                            0.2019,
+                            0.205,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Bill To",
+                        "value": "Demo Manufacturing Co.",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.2197,
+                            0.0485,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1363,
+                            0.2197,
+                            0.1857,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Currency",
+                        "value": "USD",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.2376,
+                            0.0728,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1606,
+                            0.2376,
+                            0.0355,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Tax ID",
+                        "value": "77-7654321",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.2554,
+                            0.0522,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.14,
+                            0.2554,
+                            0.0897,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Subtotal",
+                        "value": "578.00",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.794,
+                            0.3516,
+                            0.0663,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.8642,
+                            0.3516,
+                            0.0514,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Total",
+                        "value": "674.24",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.8158,
+                            0.3896,
+                            0.0444,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.8642,
+                            0.3896,
+                            0.0514,
+                            0.011
+                        ]
+                    }
+                ],
+                "tables": []
+            }
+        }
+    ]
+}

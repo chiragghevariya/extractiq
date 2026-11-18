@@ -1,0 +1,4 @@
+grn_number,po_number,received_date,line_no,sku,description,quantity
+GRN-5008,PO-1008,2026-11-08,1,KIP-2040,Bearing 6204-2RS,40
+GRN-5008,PO-1008,2026-11-08,2,KIP-3300,Hydraulic hose 1/2in x 2m,6
+GRN-5010,PO-1010,2026-11-09,1,HP-WRAP-50,Stretch wrap 500mm x 300m,10

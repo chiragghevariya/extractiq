@@ -1,0 +1,192 @@
+# ExtractIQ local infrastructure.
+#
+#   docker compose -f infra/docker-compose.yml up -d                  # backing services only
+#   docker compose -f infra/docker-compose.yml --profile app up -d    # + API, Horizon, Reverb, scheduler, web
+#
+# Ports: Postgres 5432 · Redis 6379 · MinIO 9000 (console 9001) · Mailpit SMTP 1025 / UI 8025
+#        Odoo 8069 · API 8030 · Reverb 8031 · Web 3030
+name: extractiq
+
+x-api: &api
+  build: { context: ../api, dockerfile: ../infra/api.Dockerfile }
+  env_file: ../api/.env
+  environment:
+    DB_HOST: postgres
+    DB_USERNAME: extractiq
+    DB_PASSWORD: secret
+    REDIS_HOST: redis
+    MAIL_HOST: mailpit
+    MAIL_PORT: 1025
+    MAILPIT_API_URL: http://mailpit:8025
+    INBOUND_MAIL_DRIVER: mailpit
+    DOCUMENTS_DISK: s3
+    AWS_ACCESS_KEY_ID: extractiq
+    AWS_SECRET_ACCESS_KEY: extractiq-secret
+    AWS_BUCKET: extractiq
+    AWS_USE_PATH_STYLE_ENDPOINT: "true"
+    AWS_ENDPOINT: http://minio:9000
+    ODOO_URL: http://odoo:8069
+    REVERB_HOST: reverb
+  volumes:
+    - ../samples:/samples:ro
+    - api-storage:/var/www/api/storage/app
+  depends_on:
+    postgres: { condition: service_healthy }
+    redis: { condition: service_healthy }
+    minio-setup: { condition: service_healthy }
+    mailpit: { condition: service_healthy }
+  profiles: [app]
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: extractiq
+      POSTGRES_USER: extractiq
+      POSTGRES_PASSWORD: secret
+    ports: ["5432:5432"]
+    volumes: [pg-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U extractiq -d extractiq"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: extractiq
+      MINIO_ROOT_PASSWORD: extractiq-secret
+    ports: ["9000:9000", "9001:9001"]
+    volumes: [minio-data:/data]
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      retries: 10
+
+  minio-setup:
+    image: minio/mc:RELEASE.2025-04-16T18-13-26Z
+    depends_on:
+      minio: { condition: service_healthy }
+    # One-shot job: creates the bucket, writes a marker, then idles so the healthcheck can report "bucket ready".
+    entrypoint: >
+      /bin/sh -c "mc alias set local http://minio:9000 extractiq extractiq-secret &&
+                  mc mb --ignore-existing local/extractiq && touch /tmp/ready && echo 'bucket ready' &&
+                  sleep infinity"
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /tmp/ready && mc ls local/extractiq >/dev/null"]
+      interval: 5s
+      retries: 20
+
+  mailpit:
+    image: axllent/mailpit:v1.24
+    ports: ["1025:1025", "8025:8025"]
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "1"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "1"
+    healthcheck:
+      test: ["CMD", "/mailpit", "readyz"]
+      interval: 10s
+      retries: 10
+
+  odoo-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    volumes: [odoo-db-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo"]
+      interval: 5s
+      retries: 10
+
+  odoo:
+    image: odoo:17.0
+    depends_on:
+      odoo-db: { condition: service_healthy }
+    environment:
+      HOST: odoo-db
+      USER: odoo
+      PASSWORD: odoo
+    ports: ["8069:8069"]
+    volumes: [odoo-data:/var/lib/odoo]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8069/web/health || exit 1"]
+      interval: 15s
+      start_period: 60s
+      retries: 10
+    # First run: open http://localhost:8069 and create database "odoo" (admin / your password), set
+    # ODOO_PASSWORD in api/.env, then `make odoo-seed` installs Purchase, Inventory and Invoicing and
+    # creates the demo vendors, products and 10 confirmed POs. Make Odoo active on the ERP Sync page.
+
+  # ---- application (profile: app) ------------------------------------------------
+  api:
+    <<: *api
+    command: sh -c "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8030 --no-reload"
+    ports: ["8030:8030"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8030/up >/dev/null || exit 1"]
+      interval: 10s
+      start_period: 30s
+      retries: 10
+
+  horizon:
+    <<: *api
+    command: php artisan horizon
+    healthcheck:
+      test: ["CMD-SHELL", "php artisan horizon:status | grep -q running"]
+      interval: 15s
+      start_period: 20s
+      retries: 5
+
+  scheduler:
+    <<: *api
+    command: php artisan schedule:work
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f schedule:work >/dev/null"]
+      interval: 30s
+      retries: 3
+
+  reverb:
+    <<: *api
+    command: php artisan reverb:start --host=0.0.0.0 --port=8031
+    ports: ["8031:8031"]
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 8031"]
+      interval: 10s
+      retries: 10
+
+  web:
+    build:
+      context: ../web
+      dockerfile: ../infra/web.Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8030/api/v1
+        NEXT_PUBLIC_REVERB_APP_KEY: ${REVERB_APP_KEY:-change-me-key}
+        NEXT_PUBLIC_REVERB_HOST: localhost
+        NEXT_PUBLIC_REVERB_PORT: "8031"
+    ports: ["3030:3030"]
+    depends_on:
+      api: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3030/login >/dev/null || exit 1"]
+      interval: 15s
+      start_period: 30s
+      retries: 10
+    profiles: [app]
+
+volumes:
+  pg-data:
+  minio-data:
+  odoo-db-data:
+  odoo-data:
+  api-storage:

@@ -1,0 +1,547 @@
+{
+  "generated_for": "2026-11-14",
+  "buyer": "Demo Manufacturing Co.",
+  "vendors": [
+    {
+      "name": "Kestrel Industrial Parts LLC",
+      "tax_id": "88-1234567",
+      "currency": "USD"
+    },
+    {
+      "name": "Brightline Office Supply Co.",
+      "tax_id": "77-7654321",
+      "currency": "USD"
+    },
+    {
+      "name": "Harbor & Pine Packaging Ltd",
+      "tax_id": "DE123456789",
+      "currency": "EUR"
+    },
+    {
+      "name": "Nimbus Cloud Services Inc",
+      "tax_id": "66-1112223",
+      "currency": "USD"
+    },
+    {
+      "name": "Quillfeather Stationers",
+      "tax_id": null,
+      "currency": "USD"
+    }
+  ],
+  "counts": {
+    "invoice": 30,
+    "purchase_order": 10,
+    "goods_receipt": 10
+  },
+  "documents": [
+    {
+      "file": "pdf/scenarios/01-po-1001-kestrel.pdf",
+      "type": "purchase_order",
+      "number": "PO-1001",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 615.6,
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/02-grn-5001-kestrel.pdf",
+      "type": "goods_receipt",
+      "number": "GRN-5001",
+      "po_number": "PO-1001",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/03-inv-k-2041-kestrel-3way-match.pdf",
+      "type": "invoice",
+      "number": "INV-K-2041",
+      "po_number": "PO-1001",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 615.6,
+      "layout": "classic",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/scenarios/04-po-1002-brightline.pdf",
+      "type": "purchase_order",
+      "number": "PO-1002",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 1156.68,
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/05-inv-bl-7781-brightline-2way-match.pdf",
+      "type": "invoice",
+      "number": "INV-BL-7781",
+      "po_number": "PO-1002",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 1156.68,
+      "layout": "modern",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/scenarios/06-po-1003-harbor-eur.pdf",
+      "type": "purchase_order",
+      "number": "PO-1003",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "currency": "EUR",
+      "total": 1289.96,
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/07-grn-5003-harbor-partial.pdf",
+      "type": "goods_receipt",
+      "number": "GRN-5003",
+      "po_number": "PO-1003",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/08-inv-hp-3310-harbor-qty-exception.pdf",
+      "type": "invoice",
+      "number": "HP-3310",
+      "po_number": "PO-1003",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "currency": "EUR",
+      "total": 1289.96,
+      "layout": "classic",
+      "expect": "match_exception"
+    },
+    {
+      "file": "pdf/scenarios/09-po-1004-kestrel.pdf",
+      "type": "purchase_order",
+      "number": "PO-1004",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 1033.56,
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/10-inv-k-2055-kestrel-price-variance.pdf",
+      "type": "invoice",
+      "number": "INV-K-2055",
+      "po_number": "PO-1004",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 1063.5,
+      "layout": "classic",
+      "expect": "match_exception"
+    },
+    {
+      "file": "pdf/scenarios/11-ncs-9001-nimbus-no-po.pdf",
+      "type": "invoice",
+      "number": "NCS-9001",
+      "po_number": null,
+      "vendor": "Nimbus Cloud Services Inc",
+      "currency": "USD",
+      "total": 727,
+      "layout": "compact",
+      "expect": "pushed (PO-1007 found by vendor + amount)"
+    },
+    {
+      "file": "pdf/scenarios/12-inv-bl-7790-brightline-total-mismatch.pdf",
+      "type": "invoice",
+      "number": "INV-BL-7790",
+      "po_number": "PO-1002",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 674.24,
+      "layout": "modern",
+      "expect": "needs_review"
+    },
+    {
+      "file": "pdf/scenarios/13-qf-118-unknown-vendor.pdf",
+      "type": "invoice",
+      "number": "QF-118",
+      "po_number": null,
+      "vendor": "Quillfeather Stationers",
+      "currency": "USD",
+      "total": 248.4,
+      "layout": "classic",
+      "expect": "needs_review"
+    },
+    {
+      "file": "pdf/scenarios/15-po-1005-brightline.pdf",
+      "type": "purchase_order",
+      "number": "PO-1005",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 162,
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/16-inv-bl-7801-order-ref.pdf",
+      "type": "invoice",
+      "number": "INV-BL-7801",
+      "po_number": "PO-1005",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 162,
+      "layout": "modern",
+      "expect": "validated with a missing-PO warning → reviewer fills PO → learns \"Order Ref\""
+    },
+    {
+      "file": "pdf/scenarios/17-po-1006-brightline.pdf",
+      "type": "purchase_order",
+      "number": "PO-1006",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 139.32,
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/18-inv-bl-7802-order-ref.pdf",
+      "type": "invoice",
+      "number": "INV-BL-7802",
+      "po_number": "PO-1006",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 139.32,
+      "layout": "modern",
+      "expect": "pushed (PO found via the learned hint)"
+    },
+    {
+      "file": "pdf/scenarios/23-po-1007-nimbus.pdf",
+      "type": "purchase_order",
+      "number": "PO-1007",
+      "vendor": "Nimbus Cloud Services Inc",
+      "currency": "USD",
+      "total": 727,
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/24-po-1008-kestrel.pdf",
+      "type": "purchase_order",
+      "number": "PO-1008",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 1776.6,
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/25-grn-5008-kestrel-partial.pdf",
+      "type": "goods_receipt",
+      "number": "GRN-5008",
+      "po_number": "PO-1008",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/26-po-1009-brightline.pdf",
+      "type": "purchase_order",
+      "number": "PO-1009",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 1613.52,
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/27-po-1010-harbor.pdf",
+      "type": "purchase_order",
+      "number": "PO-1010",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "currency": "EUR",
+      "total": 218.96,
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/28-grn-5010-harbor.pdf",
+      "type": "goods_receipt",
+      "number": "GRN-5010",
+      "po_number": "PO-1010",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/scenarios/19-inv-k-2070-kestrel-partial-delivery.pdf",
+      "type": "invoice",
+      "number": "INV-K-2070",
+      "po_number": "PO-1008",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 541.08,
+      "layout": "classic",
+      "expect": "pushed (3-way, partial delivery)"
+    },
+    {
+      "file": "pdf/scenarios/20-inv-k-2071-kestrel-overbilled.pdf",
+      "type": "invoice",
+      "number": "INV-K-2071",
+      "po_number": "PO-1008",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 1235.52,
+      "layout": "classic",
+      "expect": "match_exception (qty_variance: over-billed; not_received)"
+    },
+    {
+      "file": "pdf/scenarios/21-inv-bl-7820-brightline-own-skus.pdf",
+      "type": "invoice",
+      "number": "INV-BL-7820",
+      "po_number": "PO-1009",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 1651.32,
+      "layout": "modern",
+      "expect": "match_exception (lines paired by description; not_on_po: courier fee)"
+    },
+    {
+      "file": "pdf/scenarios/22-inv-hp-3320-harbour-trading-name.pdf",
+      "type": "invoice",
+      "number": "HP-3320",
+      "po_number": "PO-1010",
+      "vendor": "Harbour & Pine Packaging GmbH",
+      "currency": "EUR",
+      "total": 218.96,
+      "layout": "classic",
+      "expect": "pushed (vendor matched by fuzzy name)"
+    },
+    {
+      "file": "pdf/bulk/grn-6001.pdf",
+      "type": "goods_receipt",
+      "number": "GRN-6001",
+      "po_number": "PO-2001",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/bulk/invoice-inv-k-3001.pdf",
+      "type": "invoice",
+      "number": "INV-K-3001",
+      "po_number": "PO-2001",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 337.54,
+      "layout": "classic",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/invoice-ncs-3002.pdf",
+      "type": "invoice",
+      "number": "NCS-3002",
+      "po_number": "PO-2002",
+      "vendor": "Nimbus Cloud Services Inc",
+      "currency": "USD",
+      "total": 2885,
+      "layout": "compact",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/grn-6002.pdf",
+      "type": "goods_receipt",
+      "number": "GRN-6002",
+      "po_number": "PO-2003",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/bulk/invoice-hp-3003.pdf",
+      "type": "invoice",
+      "number": "HP-3003",
+      "po_number": "PO-2003",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "currency": "EUR",
+      "total": 97.1,
+      "layout": "classic",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/invoice-inv-bl-3004.pdf",
+      "type": "invoice",
+      "number": "INV-BL-3004",
+      "po_number": "PO-2004",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 2089.8,
+      "layout": "modern",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/invoice-inv-k-3005-multipage.pdf",
+      "type": "invoice",
+      "number": "INV-K-3005",
+      "po_number": "PO-2005",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 9879.3,
+      "layout": "classic",
+      "pages": 2,
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/grn-6003.pdf",
+      "type": "goods_receipt",
+      "number": "GRN-6003",
+      "po_number": "PO-2006",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/bulk/invoice-hp-3006-de.pdf",
+      "type": "invoice",
+      "number": "HP-3006",
+      "po_number": "PO-2006",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "currency": "EUR",
+      "total": 1239.8,
+      "layout": "german",
+      "language": "de",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/invoice-ncs-3007.pdf",
+      "type": "invoice",
+      "number": "NCS-3007",
+      "po_number": "PO-2007",
+      "vendor": "Nimbus Cloud Services Inc",
+      "currency": "USD",
+      "total": 1641,
+      "layout": "compact",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/grn-6004.pdf",
+      "type": "goods_receipt",
+      "number": "GRN-6004",
+      "po_number": "PO-2009",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/bulk/invoice-inv-k-3009.pdf",
+      "type": "invoice",
+      "number": "INV-K-3009",
+      "po_number": "PO-2009",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 456.2,
+      "layout": "classic",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/invoice-ncs-3010.pdf",
+      "type": "invoice",
+      "number": "NCS-3010",
+      "po_number": "PO-2010",
+      "vendor": "Nimbus Cloud Services Inc",
+      "currency": "USD",
+      "total": 8412,
+      "layout": "compact",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/invoice-hp-3011.pdf",
+      "type": "invoice",
+      "number": "HP-3011",
+      "po_number": "PO-2011",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "currency": "EUR",
+      "total": 3179.32,
+      "layout": "classic",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/grn-6005.pdf",
+      "type": "goods_receipt",
+      "number": "GRN-6005",
+      "po_number": "PO-2012",
+      "vendor": "Brightline Office Supply Co.",
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/bulk/invoice-inv-bl-3012.pdf",
+      "type": "invoice",
+      "number": "INV-BL-3012",
+      "po_number": "PO-2012",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 4795.2,
+      "layout": "modern",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/invoice-inv-k-3013.pdf",
+      "type": "invoice",
+      "number": "INV-K-3013",
+      "po_number": "PO-2013",
+      "vendor": "Kestrel Industrial Parts LLC",
+      "currency": "USD",
+      "total": 641.97,
+      "layout": "classic",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/invoice-ncs-3014.pdf",
+      "type": "invoice",
+      "number": "NCS-3014",
+      "po_number": "PO-2014",
+      "vendor": "Nimbus Cloud Services Inc",
+      "currency": "USD",
+      "total": 1876,
+      "layout": "compact",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/grn-6006.pdf",
+      "type": "goods_receipt",
+      "number": "GRN-6006",
+      "po_number": "PO-2015",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "expect": "approved"
+    },
+    {
+      "file": "pdf/bulk/invoice-hp-3015.pdf",
+      "type": "invoice",
+      "number": "HP-3015",
+      "po_number": "PO-2015",
+      "vendor": "Harbor & Pine Packaging Ltd",
+      "currency": "EUR",
+      "total": 2559.33,
+      "layout": "classic",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/bulk/invoice-inv-bl-3016.pdf",
+      "type": "invoice",
+      "number": "INV-BL-3016",
+      "po_number": "PO-2016",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 1953.72,
+      "layout": "modern",
+      "expect": "pushed"
+    },
+    {
+      "file": "pdf/scans/14-scan-ncs-9050.pdf",
+      "type": "invoice",
+      "number": "NCS-9050",
+      "po_number": null,
+      "vendor": "Nimbus Cloud Services Inc",
+      "currency": "USD",
+      "total": 540,
+      "scanned": true,
+      "expect": "needs_review (scan: low-confidence lines, no PO)"
+    },
+    {
+      "file": "pdf/scans/29-scan-inv-bl-3008-skewed.pdf",
+      "type": "invoice",
+      "number": "INV-BL-3008",
+      "po_number": "PO-2008",
+      "vendor": "Brightline Office Supply Co.",
+      "currency": "USD",
+      "total": 596.16,
+      "scanned": true,
+      "skew_degrees": 1.4,
+      "expect": "needs_review (skewed scan: a couple of fields under 90% confidence)"
+    }
+  ],
+  "master_data": [
+    "erp/seed.json",
+    "csv/vendors.csv",
+    "csv/purchase_orders.csv",
+    "csv/goods_receipts.csv"
+  ]
+}

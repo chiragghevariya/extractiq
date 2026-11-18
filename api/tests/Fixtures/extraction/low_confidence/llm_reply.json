@@ -1,0 +1,140 @@
+{
+    "vendor": {
+        "name": {
+            "value": "Nimbus Cloud Services Inc",
+            "confidence": 0.96,
+            "source": [
+                "p1.l8"
+            ]
+        },
+        "tax_id": {
+            "value": "66-1112223",
+            "confidence": 0.96,
+            "source": [
+                "p1.l11"
+            ]
+        },
+        "address": {
+            "value": null,
+            "confidence": 0,
+            "source": []
+        },
+        "email": {
+            "value": null,
+            "confidence": 0,
+            "source": []
+        }
+    },
+    "invoice_number": {
+        "value": "NCS-9050",
+        "confidence": 0.96,
+        "source": [
+            "p1.l5"
+        ]
+    },
+    "invoice_date": {
+        "value": "2026-11-13",
+        "confidence": 0.96,
+        "source": [
+            "p1.l6"
+        ]
+    },
+    "due_date": {
+        "value": "2026-12-13",
+        "confidence": 0.96,
+        "source": [
+            "p1.l7"
+        ]
+    },
+    "po_number": {
+        "value": null,
+        "confidence": 0,
+        "source": []
+    },
+    "currency": {
+        "value": "USD",
+        "confidence": 0.96,
+        "source": [
+            "p1.l10"
+        ]
+    },
+    "subtotal": {
+        "value": 540,
+        "confidence": 0.96,
+        "source": [
+            "p1.l23"
+        ]
+    },
+    "tax_total": {
+        "value": 0,
+        "confidence": 0.96,
+        "source": [
+            "p1.l24"
+        ]
+    },
+    "shipping": {
+        "value": null,
+        "confidence": 0,
+        "source": []
+    },
+    "total": {
+        "value": 540,
+        "confidence": 0.96,
+        "source": [
+            "p1.l25"
+        ]
+    },
+    "payment_terms": {
+        "value": null,
+        "confidence": 0,
+        "source": []
+    },
+    "bank": {
+        "account": {
+            "value": null,
+            "confidence": 0,
+            "source": []
+        },
+        "swift": {
+            "value": null,
+            "confidence": 0,
+            "source": []
+        }
+    },
+    "line_items": [
+        {
+            "line_no": 1,
+            "sku": "NCS-VN-M",
+            "description": "Managed VM medium (monthly)",
+            "qty": 2,
+            "uom": null,
+            "unit_price": 145,
+            "tax_rate": null,
+            "amount": 290,
+            "confidence": 0.96,
+            "source": [
+                "p1.l15",
+                "p1.l16",
+                "p1.l17",
+                "p1.l18"
+            ]
+        },
+        {
+            "line_no": 2,
+            "sku": "NCS-SUP-G",
+            "description": "Gold support plan (monthly)",
+            "qty": 1,
+            "uom": null,
+            "unit_price": 250,
+            "tax_rate": null,
+            "amount": 250,
+            "confidence": 0.96,
+            "source": [
+                "p1.l19",
+                "p1.l20",
+                "p1.l21",
+                "p1.l22"
+            ]
+        }
+    ]
+}

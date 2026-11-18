@@ -1,0 +1,7 @@
+{
+  "name": "extractiq-samples",
+  "private": true,
+  "type": "module",
+  "scripts": { "generate": "node generate.mjs" },
+  "dependencies": { "pdfkit": "^0.15.0" }
+}

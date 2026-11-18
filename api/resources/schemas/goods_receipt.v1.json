@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://extractiq.test/schemas/goods_receipt.v1.json",
+  "x-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "Goods receipt",
+  "x-document-type": "goods_receipt",
+  "properties": {
+    "vendor": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The supplier.",
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Legal or trading name of the supplier (never the buyer)."
+        },
+        "tax_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Supplier tax / VAT / EIN number exactly as printed."
+        },
+        "address": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Supplier postal address on one line."
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Supplier billing email address.",
+          "format": "email"
+        }
+      },
+      "required": [
+        "name",
+        "tax_id",
+        "address",
+        "email"
+      ]
+    },
+    "grn_number": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The goods receipt / delivery note number."
+    },
+    "receipt_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Date the goods were received, ISO 8601.",
+      "format": "date"
+    },
+    "po_number": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Purchase order the delivery is against."
+    },
+    "received_by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Person or location that received the goods."
+    },
+    "line_items": {
+      "type": "array",
+      "description": "Line items in document order.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "line_no": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "1-based position of the line on the document."
+          },
+          "sku": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Supplier item code / SKU / part number."
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Item description."
+          },
+          "qty": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Quantity received."
+          },
+          "uom": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Unit of measure (e.g. EA, BOX, KG, HR) if printed."
+          },
+          "qty_ordered": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Quantity ordered, if printed."
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Condition / damage notes for the line."
+          }
+        },
+        "required": [
+          "line_no",
+          "sku",
+          "description",
+          "qty",
+          "uom",
+          "qty_ordered",
+          "notes"
+        ]
+      }
+    }
+  },
+  "required": [
+    "vendor",
+    "grn_number",
+    "receipt_date",
+    "po_number",
+    "received_by",
+    "line_items"
+  ]
+}

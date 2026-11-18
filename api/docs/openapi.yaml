@@ -1,0 +1,1614 @@
+openapi: 3.1.0
+info:
+  title: ExtractIQ API
+  version: 1.0.0
+  license: { name: MIT, identifier: MIT }
+  description: |
+    AI document extraction for accounts payable: ingest invoices, purchase orders and goods receipts,
+    extract them with OCR + an LLM, validate, review, match (2-/3-way) and push to an ERP.
+
+    * All business data is scoped to the authenticated user's company (multi-tenant).
+    * Money is integer **minor units** (`*_minor`) plus an ISO 4217 `currency`. Dates are ISO 8601.
+    * Responses follow JSON:API conventions: `{ data: { type, id, attributes, relationships } }`,
+      `included` for side-loaded resources, `meta.page` + `links` for pagination, and
+      `{ errors: [{ status, code, title, detail, source.pointer }] }` for failures.
+    * Auth: the web app uses **Sanctum SPA (cookie) auth**: `GET /sanctum/csrf-cookie`, then
+      `POST /auth/login` from an origin in `SANCTUM_STATEFUL_DOMAINS` → session cookie, with the
+      `X-XSRF-TOKEN` header on writes. Any other client gets a bearer token in `meta.token`.
+    * Status machine: `received → ocr_done → extracted → needs_review | validated → approved →
+      matched | match_exception → pushed | push_failed`.
+servers:
+  - url: http://localhost:8030/api/v1
+    description: Local
+security:
+  - bearer: []
+tags:
+  - name: Auth
+  - name: Documents
+  - name: Review & workflow
+  - name: Matching
+  - name: Vendors
+  - name: Master data
+  - name: ERP
+  - name: Mock ERP
+  - name: Dashboard
+  - name: Analytics
+  - name: Integrations
+  - name: Ingestion
+  - name: Settings
+  - name: Security
+
+paths:
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Sign in (session cookie for the SPA, bearer token for other clients)
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email, example: reviewer@extractiq.test }
+                password: { type: string, example: password }
+                device: { type: string, example: web }
+      responses:
+        '200':
+          description: Token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/User' }
+                  meta: { type: object, properties: { auth: { type: string, enum: [session, token] }, token: { type: string, description: 'Only when auth = token' } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /auth/demo:
+    post:
+      tags: [Auth]
+      summary: Sign in as the read-only public demo visitor (only when DEMO_MODE=true)
+      description: Every write by the demo visitor is refused with `403 demo_read_only`. The demo tenant is reset nightly.
+      security: []
+      responses:
+        '200': { description: Signed in, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/User' }, meta: { type: object, properties: { demo: { const: true }, auth: { type: string }, token: { type: string } } } } } } } }
+        '404': { description: Demo mode is off }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Current user and company
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/User' } } } } } }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Revoke the current token
+      responses:
+        '204': { description: Revoked }
+
+  /documents:
+    get:
+      tags: [Documents]
+      summary: List documents
+      parameters:
+        - { name: 'filter[status]', in: query, description: Comma-separated statuses, schema: { type: string, example: 'needs_review,match_exception' } }
+        - { name: 'filter[type]', in: query, schema: { $ref: '#/components/schemas/DocumentType' } }
+        - { name: 'filter[source]', in: query, schema: { type: string, enum: [upload, email, api] } }
+        - { name: 'filter[uploaded_by]', in: query, schema: { type: integer } }
+        - { name: 'filter[q]', in: query, description: 'Search filename, document number, PO number, vendor, email sender', schema: { type: string } }
+        - { name: 'filter[vendor_id]', in: query, schema: { type: integer } }
+        - { name: sort, in: query, schema: { type: string, enum: [received_at, -received_at, total_minor, -total_minor, document_date, -document_date, confidence, -confidence], default: -received_at } }
+        - { $ref: '#/components/parameters/PageNumber' }
+        - { $ref: '#/components/parameters/PageSize' }
+      responses:
+        '200':
+          description: Page of documents
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/Paginated' }
+                  - type: object
+                    properties:
+                      data: { type: array, items: { $ref: '#/components/schemas/Document' } }
+    post:
+      tags: [Documents, Ingestion]
+      summary: Upload one or more files (PDF, PNG, JPG, TIFF; max 20 MB each)
+      description: |
+        Files are deduplicated per company by SHA-256 (a re-upload returns the existing document, listed in `meta.duplicates`).
+        Originals are stored on the documents disk (S3/MinIO) at `{company}/{yyyy}/{mm}/{uuid}.{ext}` and a document is
+        created with status `received`; ProcessPages then renders 300 DPI PNG page images before OCR.
+        Requests authenticated with a personal access token are recorded with source `api`, browser uploads as `upload`.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: ['files[]']
+              properties:
+                'files[]': { type: array, items: { type: string, format: binary }, maxItems: 20 }
+                type: { $ref: '#/components/schemas/DocumentType', description: 'Optional declared type; overrides the AI guess' }
+      responses:
+        '201':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Document' } }
+                  meta:
+                    type: object
+                    properties:
+                      created: { type: integer }
+                      duplicates: { type: array, items: { type: string }, description: IDs of already-known documents }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Documents]
+      summary: Get a document with lines, vendor, latest match and OCR text
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Document' }
+                  included:
+                    type: array
+                    items:
+                      oneOf:
+                        - { $ref: '#/components/schemas/DocumentLine' }
+                        - { $ref: '#/components/schemas/Vendor' }
+                        - { $ref: '#/components/schemas/Match' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      tags: [Review & workflow]
+      summary: Apply reviewer corrections (alias of PATCH /documents/{id}/extraction)
+      description: Kept for older clients; same body and behaviour as PATCH /documents/{id}/extraction.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DocumentUpdate' }
+      responses:
+        '200': { description: Updated, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Document' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+    delete:
+      tags: [Documents]
+      summary: Soft-delete a document (admin)
+      responses:
+        '204': { description: Deleted }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /documents/{id}/extraction:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    patch:
+      tags: [Review & workflow]
+      summary: Save reviewer corrections as a draft (re-validates immediately)
+      description: |
+        Only while status is `extracted`, `needs_review` or `validated`. Sending `lines` replaces all line items.
+        Edited and `accepted` fields are marked human-verified (confidence 1.0); corrected values teach the vendor memory.
+        Writes a `review` event whose meta holds the field-level diff: `diff.fields.{key}.before/after`,
+        `diff.lines.{added,removed,changed}` and `diff.accepted`, plus the actor and time.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DocumentUpdate' }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Document' } } } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/file:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Documents]
+      summary: Stream the original file (session-authenticated; the web app uses /file-url)
+      responses:
+        '200': { description: File bytes, content: { application/pdf: { schema: { type: string, format: binary } } } }
+  /documents/{id}/file-url:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Documents, Security]
+      summary: Short-lived signed link to the original (or a page image with ?page=N)
+      description: A presigned S3 URL when documents live on S3/MinIO, otherwise a signed `/files/{uuid}` URL. Expires after `SIGNED_URL_TTL` seconds (default 300).
+      parameters:
+        - { name: page, in: query, schema: { type: integer, minimum: 1 } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type: { const: file-links }
+                      id: { type: string }
+                      attributes: { type: object, properties: { url: { type: string, format: uri }, expires_at: { type: string, format: date-time }, mime_type: { type: string } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /files/{uuid}:
+    get:
+      tags: [Documents, Security]
+      summary: Download through a signed link (no session; the signature is the credential)
+      security: []
+      parameters:
+        - { name: uuid, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: page, in: query, schema: { type: integer } }
+        - { name: expires, in: query, required: true, schema: { type: integer } }
+        - { name: signature, in: query, required: true, schema: { type: string } }
+      responses:
+        '200': { description: File bytes, content: { application/octet-stream: { schema: { type: string, format: binary } } } }
+        '403': { description: 'Missing, tampered or expired signature' }
+  /documents/{id}/pages:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Documents]
+      summary: OCR text per page (document_pages)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type: { const: document-pages }
+                        id: { type: string }
+                        attributes:
+                          type: object
+                          properties:
+                            page_number: { type: integer }
+                            width: { type: [integer, 'null'], description: 'Page image width in px' }
+                            height: { type: [integer, 'null'] }
+                            dpi: { type: [integer, 'null'], example: 300 }
+                            has_image: { type: boolean }
+                            word_count: { type: integer }
+                            key_value_count: { type: integer }
+                            table_count: { type: integer }
+                            image_mime: { type: [string, 'null'] }
+                            text: { type: [string, 'null'] }
+                            char_count: { type: integer }
+                            confidence: { type: [number, 'null'] }
+                            ocr_provider: { type: [string, 'null'] }
+  /documents/{id}/pages/{page}/ocr:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+      - { name: page, in: path, required: true, schema: { type: integer, minimum: 1 } }
+      - { name: include, in: query, schema: { type: string, enum: [raw] }, description: 'raw = add the provider payload (Textract blocks, Tesseract TSV rows, pdftotext boxes)' }
+    get:
+      tags: [Documents]
+      summary: Normalised OCR for one page
+      description: Same shape for every provider. Bounding boxes are [x, y, w, h] as 0–1 ratios of the page, origin top-left.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type: { const: document-page-ocr }
+                      id: { type: string }
+                      attributes:
+                        type: object
+                        properties:
+                          page_number: { type: integer }
+                          provider: { type: [string, 'null'], examples: [pdftext, tesseract, textract] }
+                          confidence: { type: [number, 'null'] }
+                          words: { type: array, items: { $ref: '#/components/schemas/OcrToken' } }
+                          lines: { type: array, items: { $ref: '#/components/schemas/OcrToken' } }
+                          key_values:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                key: { type: string }
+                                value: { type: string }
+                                type: { type: [string, 'null'], description: 'Textract AnalyzeExpense field type, e.g. INVOICE_RECEIPT_ID, TOTAL' }
+                                confidence: { type: number }
+                                key_bbox: { $ref: '#/components/schemas/BBox' }
+                                value_bbox: { $ref: '#/components/schemas/BBox' }
+                          tables:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                bbox: { $ref: '#/components/schemas/BBox' }
+                                confidence: { type: number }
+                                rows: { type: array, items: { type: array, items: { type: string } } }
+                          raw: { type: object, description: 'Only with include=raw' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /documents/{id}/pages/{page}/image:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+      - { name: page, in: path, required: true, schema: { type: integer, minimum: 1 } }
+    get:
+      tags: [Documents]
+      summary: Page image (300 DPI PNG for PDFs; the original for image uploads)
+      responses:
+        '200': { description: Image bytes, content: { image/png: { schema: { type: string, format: binary } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /documents/{id}/events:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Documents]
+      summary: Audit trail (every pipeline attempt and human action)
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { type: array, items: { $ref: '#/components/schemas/Event' } } } } } } }
+  /documents/{id}/matches:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Matching]
+      summary: Match history for an invoice (newest first)
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { type: array, items: { $ref: '#/components/schemas/Match' } } } } } } }
+  /documents/{id}/approve:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Review & workflow]
+      summary: Approve (invoices then queue matching; POs/GRNs re-match waiting invoices)
+      description: Optionally send the same body as PATCH /extraction to apply pending edits first (one request for "fix and approve"). Refused with 422 while any check fails.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DocumentUpdate' }
+      responses:
+        '200': { description: Approved, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Document' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/retry:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Review & workflow]
+      summary: Re-queue the step the document is waiting on
+      responses:
+        '202': { description: Queued, content: { application/json: { schema: { type: object, properties: { meta: { type: object, properties: { queued_step: { type: string, enum: [ocr, extract, validate, match, push] } } } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/override-match:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Matching]
+      summary: Accept a match exception with a reason and push to the ERP (alias of POST /documents/{id}/match/accept)
+      description: Needs the role set in the company's matching settings (admin by default); 403 otherwise.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [reason], properties: { reason: { type: string, minLength: 5 } } }
+      responses:
+        '200': { description: Overridden, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Document' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/reject:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Review & workflow]
+      summary: Reject a document under review (leaves the queue; never matched or pushed)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [reason], properties: { reason: { type: string, minLength: 3, maxLength: 500 } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Document' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/reopen:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Review & workflow]
+      summary: Reopen a rejected document (re-validated, back to needs_review or validated)
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Document' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/reassign:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Review & workflow]
+      summary: Assign the review to a user in the same company (null unassigns)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [assignee_id], properties: { assignee_id: { type: [integer, 'null'] } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Document' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /review-queue:
+    get:
+      tags: [Review & workflow]
+      summary: Documents waiting for review, by due date (nulls last) then arrival
+      parameters:
+        - { name: 'filter[status]', in: query, schema: { type: string, enum: [needs_review, validated], default: needs_review } }
+        - { name: 'filter[assignee]', in: query, schema: { type: string }, description: '`me`, `unassigned` or a user id' }
+        - { name: 'filter[sla]', in: query, schema: { type: string, enum: [overdue, due_soon] } }
+        - { name: 'filter[q]', in: query, schema: { type: string }, description: 'Document number, vendor or file name' }
+        - { $ref: '#/components/parameters/PageNumber' }
+        - { $ref: '#/components/parameters/PageSize' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Document' } }
+                  meta:
+                    type: object
+                    properties:
+                      page: { type: object }
+                      counts:
+                        type: object
+                        properties:
+                          total: { type: integer }
+                          mine: { type: integer }
+                          unassigned: { type: integer }
+                          overdue: { type: integer }
+                          due_soon: { type: integer }
+                      sla: { type: object, properties: { hours: { type: integer, example: 24 }, warning_hours: { type: integer, example: 4 } } }
+                      order: { type: array, items: { type: string }, description: 'Ids of the whole filtered queue in order (for next/previous, J/K)' }
+  /users:
+    get:
+      tags: [Auth]
+      summary: Users in the current company (for assignment)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type: { const: users }
+                        id: { type: string }
+                        attributes: { $ref: '#/components/schemas/WorkspaceUser' }
+  /documents/{id}/match:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Matching]
+      summary: The invoice's current match, every line beside its PO line and what was received
+      description: '`data` is null until the invoice has been matched. `meta.can_accept` says whether the current user may accept variances.'
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Match' } } } } } }
+  /documents/{id}/match/accept:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Matching]
+      summary: Accept every open variance; the invoice is matched and sent to the ERP (unless on hold)
+      description: Needs a reason and the accept role from the company's matching settings (admin by default).
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [reason], properties: { reason: { type: string, minLength: 5, maxLength: 1000 } } } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Match' } } } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/match/lines/{line}/accept:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+      - { name: line, in: path, required: true, schema: { type: string }, description: Match line id }
+    post:
+      tags: [Matching]
+      summary: Accept one line's variance; when nothing else is open the invoice is matched
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [reason], properties: { reason: { type: string, minLength: 5, maxLength: 1000 } } } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Match' } } } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/match/credit-note:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Matching]
+      summary: Record a credit-note request for the disputed amount; the invoice stays in exception
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [reason], properties: { reason: { type: string, minLength: 5 }, amount_minor: { type: integer, minimum: 1, description: 'Defaults to totals.disputed_minor' } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Match' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/match/rematch:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Matching]
+      summary: Run matching again (e.g. after master data changed); older runs are kept as history
+      responses:
+        '202': { description: Queued }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/hold:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Matching]
+      summary: Put a document on hold; it is not sent to the ERP until released
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [reason], properties: { reason: { type: string, minLength: 3 } } } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Document' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/release:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Matching]
+      summary: Release a hold; a matched invoice is then pushed to the ERP
+      requestBody: { required: false, content: { application/json: { schema: { type: object, properties: { note: { type: string } } } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Document' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /documents/{id}/vendor:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    patch:
+      tags: [Review & workflow]
+      summary: Pick the vendor by hand (null re-runs automatic resolution)
+      description: With remember_alias, the vendor name as printed on the document becomes an alias of the picked vendor.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [vendor_id], properties: { vendor_id: { type: [integer, 'null'] }, remember_alias: { type: boolean } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Document' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /matches:
+    get:
+      tags: [Matching]
+      summary: Current match per invoice
+      parameters:
+        - { name: 'filter[result]', in: query, schema: { type: string, enum: [open, on_hold, credit_note, matched, accepted, exception], default: open }, description: '`open` = invoices in match_exception and not on hold' }
+        - { name: 'filter[q]', in: query, schema: { type: string }, description: 'Invoice number or vendor' }
+        - { $ref: '#/components/parameters/PageNumber' }
+        - { $ref: '#/components/parameters/PageSize' }
+      responses:
+        '200':
+          description: 'OK; meta.counts has open, on_hold, credit_note, matched and accepted'
+          content: { application/json: { schema: { allOf: [{ $ref: '#/components/schemas/Paginated' }, { type: object, properties: { data: { type: array, items: { $ref: '#/components/schemas/Match' } } } }] } } }
+
+  /purchase-orders:
+    get:
+      tags: [Master data]
+      summary: Purchase orders with received and billed progress
+      parameters:
+        - { name: 'filter[q]', in: query, schema: { type: string }, description: 'PO number or vendor name' }
+        - { name: 'filter[status]', in: query, schema: { type: string, enum: [open, closed, cancelled] } }
+        - { name: 'filter[source]', in: query, schema: { type: string, enum: [csv, erp, document, manual] } }
+        - { name: 'filter[vendor]', in: query, schema: { type: integer } }
+        - { $ref: '#/components/parameters/PageNumber' }
+        - { $ref: '#/components/parameters/PageSize' }
+      responses:
+        '200':
+          description: 'OK; meta.counts per status'
+          content: { application/json: { schema: { allOf: [{ $ref: '#/components/schemas/Paginated' }, { type: object, properties: { data: { type: array, items: { $ref: '#/components/schemas/PurchaseOrder' } } } }] } } }
+  /purchase-orders/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Master data]
+      summary: One purchase order with per-line ordered / received / billed, its receipts and the invoices matched against it
+      responses:
+        '200': { description: 'OK; attributes add lines[], receipts[], invoices[] and source_document', content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/PurchaseOrder' } } } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /goods-receipts:
+    get:
+      tags: [Master data]
+      summary: Goods receipts with their PO and how many lines are linked to PO lines
+      parameters:
+        - { name: 'filter[q]', in: query, schema: { type: string } }
+        - { name: 'filter[purchase_order]', in: query, schema: { type: integer } }
+        - { $ref: '#/components/parameters/PageNumber' }
+        - { $ref: '#/components/parameters/PageSize' }
+      responses:
+        '200': { description: 'Rows of type goods-receipts: number, received_date, source, purchase_order, vendor_name, line_count, unlinked_lines, quantity' }
+  /imports/{kind}:
+    parameters:
+      - { name: kind, in: path, required: true, schema: { type: string, enum: [vendors, purchase_orders, goods_receipts] } }
+    post:
+      tags: [Master data]
+      summary: Import master data from CSV (admin)
+      description: |
+        Upserts by normalised number (re-importing is safe). PO and GRN files have one row per line.
+        Valid records are imported and every bad row is reported; invoices waiting in match_exception for
+        the imported POs are matched again (meta.rematched).
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema: { type: object, required: [file], properties: { file: { type: string, format: binary } } }
+      responses:
+        '200':
+          description: Processed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      created: { type: integer }
+                      updated: { type: integer }
+                      rows: { type: integer }
+                      rematched: { type: integer }
+                      errors: { type: array, items: { type: object, properties: { row: { type: integer }, message: { type: string } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /imports/{kind}/template:
+    parameters:
+      - { name: kind, in: path, required: true, schema: { type: string, enum: [vendors, purchase_orders, goods_receipts] } }
+    get:
+      tags: [Master data]
+      summary: Header-only CSV template
+      responses:
+        '200': { description: CSV, content: { text/csv: { schema: { type: string } } } }
+  /settings/matching:
+    get:
+      tags: [Master data]
+      summary: The company's matching tolerances (meta.defaults has the system defaults)
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/MatchTolerances' } } } } } }
+    patch:
+      tags: [Master data]
+      summary: Update matching tolerances (admin)
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/MatchTolerances' } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/MatchTolerances' } } } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /erp-pushes:
+    get:
+      tags: [ERP]
+      summary: The push log — one row per attempt to create a bill in the ERP
+      parameters:
+        - { name: 'filter[status]', in: query, schema: { type: string, enum: [succeeded, failed, dead] }, description: '`failed` = will be retried; `dead` = gave up (dead-lettered), the document is push_failed' }
+        - { name: 'filter[connector]', in: query, schema: { type: string } }
+        - { name: 'filter[document]', in: query, schema: { type: integer } }
+        - { $ref: '#/components/parameters/PageNumber' }
+        - { $ref: '#/components/parameters/PageSize' }
+      responses:
+        '200':
+          description: 'OK; meta.summary has succeeded, failed, dead, queued, posted, paid and last_success_at'
+          content: { application/json: { schema: { allOf: [{ $ref: '#/components/schemas/Paginated' }, { type: object, properties: { data: { type: array, items: { $ref: '#/components/schemas/ErpPush' } } } }] } } }
+  /erp-pushes/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [ERP]
+      summary: One attempt with the full request sent and the ERP's response
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/ErpPush' } } } } } }
+  /erp/connections:
+    get:
+      tags: [ERP]
+      summary: Every connector with its state, capabilities, summary and field mapping
+      description: 'meta.active is the connector bills are pushed to; meta.last_run is the latest sync run; meta.mapping_fields lists our mappable fields.'
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { type: array, items: { $ref: '#/components/schemas/ErpConnection' } } } } } } }
+  /erp/connections/{connector}/test:
+    parameters: [{ name: connector, in: path, required: true, schema: { type: string, enum: [mock, odoo, quickbooks, webhook] } }]
+    post:
+      tags: [ERP]
+      summary: Test a connection (stores Connected / Error and the message)
+      responses:
+        '200': { description: 'data.ok and data.message, plus the updated connection' }
+  /erp/connections/{connector}/activate:
+    parameters: [{ name: connector, in: path, required: true, schema: { type: string, enum: [mock, odoo, quickbooks, webhook] } }]
+    post:
+      tags: [ERP]
+      summary: Make this the connector bills are pushed to and synced from (admin)
+      responses:
+        '200': { description: The connection list }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /erp/connections/{connector}/mapping:
+    parameters: [{ name: connector, in: path, required: true, schema: { type: string, enum: [mock, odoo, quickbooks, webhook] } }]
+    patch:
+      tags: [ERP]
+      summary: Field mapping, default GL account, tax codes and cost-centre rules (admin)
+      description: Each field may only go to an ERP field that connector accepts (webhook takes any name). Cost-centre rules reference vendors of the same company.
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ErpMapping' } } } }
+      responses:
+        '200': { description: The updated connection }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /erp/connections/{connector}/settings:
+    parameters: [{ name: connector, in: path, required: true, schema: { type: string, enum: [mock, odoo, quickbooks, webhook] } }]
+    patch:
+      tags: [ERP]
+      summary: Mock ERP options (admin)
+      requestBody: { required: true, content: { application/json: { schema: { type: object, properties: { outage: { type: boolean, description: 'Simulate an outage: pushes fail with 503 and are retried' } } } } } }
+      responses:
+        '200': { description: The updated connection }
+  /erp/sync:
+    post:
+      tags: [ERP]
+      summary: Sync now — queue the pull of vendors, POs, receipts and bill status (also scheduled every 15 minutes)
+      responses:
+        '202': { description: Queued }
+  /erp/sync-runs:
+    get:
+      tags: [ERP]
+      summary: The last 20 sync runs
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { type: array, items: { $ref: '#/components/schemas/ErpSyncRun' } } } } } } }
+  /erp/quickbooks/connect:
+    get:
+      tags: [ERP]
+      summary: Start the QuickBooks OAuth 2.0 flow (admin) — returns the Intuit consent URL
+      responses:
+        '200': { description: 'data.url', content: { application/json: { schema: { type: object, properties: { data: { type: object, properties: { url: { type: string, format: uri } } } } } } } }
+  /erp/quickbooks/callback:
+    get:
+      tags: [ERP]
+      summary: OAuth redirect target — exchanges the code, stores the tokens (encrypted) and redirects to the ERP Sync page
+      parameters:
+        - { name: code, in: query, schema: { type: string } }
+        - { name: state, in: query, schema: { type: string } }
+        - { name: realmId, in: query, schema: { type: string } }
+      responses:
+        '302': { description: 'To /erp-sync?qbo=connected or ?qbo=error&message=…' }
+  /erp/quickbooks/disconnect:
+    post:
+      tags: [ERP]
+      summary: Revoke and forget the QuickBooks tokens (admin)
+      responses:
+        '200': { description: The connection list }
+  /erp/files/{uuid}:
+    parameters: [{ name: uuid, in: path, required: true, schema: { type: string, format: uuid } }]
+    get:
+      tags: [ERP]
+      security: []
+      summary: The original file behind a signed, expiring link (sent in webhook payloads)
+      responses:
+        '200': { description: The file }
+        '403': { description: Missing or expired signature }
+  /mock-erp/bills:
+    get:
+      tags: [Mock ERP]
+      summary: Bills in the Mock ERP (meta.counts per status)
+      parameters: [{ name: 'filter[status]', in: query, schema: { type: string, enum: [draft, posted, paid, cancelled] } }]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { type: array, items: { $ref: '#/components/schemas/MockBill' } } } } } } }
+  /mock-erp/bills/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Mock ERP]
+      summary: One bill with lines (account, tax code, cost centre) and mapped fields
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/MockBill' } } } } } }
+  /mock-erp/bills/{id}/post:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Mock ERP]
+      summary: Post a draft bill (as AP would in the ERP)
+      responses:
+        '200': { description: The bill }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /mock-erp/bills/{id}/pay:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Mock ERP]
+      summary: Record payment of a bill
+      responses:
+        '200': { description: The bill }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /mock-erp/bills/{id}/attachment:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Mock ERP]
+      summary: The PDF attached to the bill
+      responses:
+        '200': { description: The file }
+  /mock-erp/purchase-orders:
+    get:
+      tags: [Mock ERP]
+      summary: Purchase orders in the Mock ERP with received quantities per line
+      responses:
+        '200': { description: OK }
+  /mock-erp/purchase-orders/{id}/receive:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [Mock ERP]
+      summary: Record a delivery of everything still open on the PO (a new receipt)
+      responses:
+        '201': { description: The receipt }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /mock-erp/vendors:
+    get:
+      tags: [Mock ERP]
+      summary: Vendors in the Mock ERP
+      responses:
+        '200': { description: OK }
+  /settings/automation:
+    get:
+      tags: [Master data]
+      summary: Touchless processing settings
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/AutomationSettings' } } } } } }
+    patch:
+      tags: [Master data]
+      summary: Update touchless processing (admin)
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/AutomationSettings' } } } }
+      responses:
+        '200': { description: OK }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /vendors:
+    get:
+      tags: [Vendors]
+      summary: List vendors
+      parameters:
+        - { name: 'filter[q]', in: query, schema: { type: string } }
+        - { $ref: '#/components/parameters/PageNumber' }
+        - { $ref: '#/components/parameters/PageSize' }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { allOf: [{ $ref: '#/components/schemas/Paginated' }, { type: object, properties: { data: { type: array, items: { $ref: '#/components/schemas/Vendor' } } } }] } } } }
+    post:
+      tags: [Vendors]
+      summary: Create a vendor
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/VendorInput' } } } }
+      responses:
+        '201': { description: Created, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Vendor' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /vendors/{id}/hints:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [Vendors]
+      summary: Vendor memory — hints learned from reviewer corrections
+      description: Created automatically when a reviewer corrects a field and the corrected value is found on the page next to a label (e.g. "PO number appears as \"Order Ref\""). Injected into every new extraction for this vendor.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type: { const: vendor-hints }
+                        id: { type: string }
+                        attributes:
+                          type: object
+                          properties:
+                            field: { type: string, examples: [po_number] }
+                            label: { type: [string, 'null'], examples: [Order Ref] }
+                            hint: { type: string }
+                            example_value: { type: [string, 'null'] }
+                            times_used: { type: integer }
+                            source_document_id: { type: [string, 'null'] }
+  /vendors/{id}/hints/{hintId}:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+      - { name: hintId, in: path, required: true, schema: { type: string } }
+    delete:
+      tags: [Vendors]
+      summary: Forget a learned hint (reviewer/admin)
+      responses:
+        '204': { description: Deleted }
+  /vendors/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    patch:
+      tags: [Vendors]
+      summary: Update a vendor
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/VendorInput' } } } }
+      responses:
+        '200': { description: Updated, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Vendor' } } } } } }
+    delete:
+      tags: [Vendors]
+      summary: Delete a vendor (admin)
+      responses:
+        '204': { description: Deleted }
+
+  /analytics:
+    get:
+      tags: [Analytics]
+      summary: KPIs, time series, distributions, rankings and pipeline health for a period
+      description: |
+        Past days come from the `analytics_daily` rollup (rebuilt nightly for the last 30 days, missing days backfilled on demand);
+        today is computed live. Each measure counts on the day of its own event (arrival, push, approval, match, push attempt).
+        KPIs carry the previous period of the same length under `kpis.previous`.
+      parameters:
+        - { name: from, in: query, schema: { type: string, format: date }, description: 'Default: 29 days before `to`' }
+        - { name: to, in: query, schema: { type: string, format: date }, description: 'Default: today. The range may be at most a year.' }
+        - { name: group_by, in: query, schema: { type: string, enum: [day, week, month] }, description: 'Default: day up to 45 days, week up to 120, then month' }
+        - { name: vendor, in: query, schema: { type: integer } }
+        - { name: type, in: query, schema: { type: string, enum: [invoice, purchase_order, goods_receipt, unknown] } }
+        - { name: connector, in: query, schema: { type: string, enum: [mock, odoo, quickbooks, webhook] }, description: 'ERP the documents were pushed through' }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/Analytics' } } } } } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /analytics/export:
+    get:
+      tags: [Analytics]
+      summary: The time series for the same filters as CSV
+      parameters:
+        - { name: from, in: query, schema: { type: string, format: date }, description: 'Default: 29 days before `to`' }
+        - { name: to, in: query, schema: { type: string, format: date }, description: 'Default: today. The range may be at most a year.' }
+        - { name: group_by, in: query, schema: { type: string, enum: [day, week, month] }, description: 'Default: day up to 45 days, week up to 120, then month' }
+        - { name: vendor, in: query, schema: { type: integer } }
+        - { name: type, in: query, schema: { type: string, enum: [invoice, purchase_order, goods_receipt, unknown] } }
+        - { name: connector, in: query, schema: { type: string, enum: [mock, odoo, quickbooks, webhook] }, description: 'ERP the documents were pushed through' }
+      responses:
+        '200': { description: 'CSV: period, received, processed, in_erp, in_progress, in_review, stopped, pushed, touchless, touchless_rate, fields_total, fields_corrected, field_accuracy, avg_processing_minutes, llm_cost_usd, ocr_cost_usd, erp_attempts, erp_succeeded, erp_dead', content: { text/csv: { schema: { type: string } } } }
+  /dashboard:
+    get:
+      tags: [Dashboard]
+      summary: KPIs, status counts and 14-day volume
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type: { const: dashboard-stats }
+                      id: { type: string }
+                      attributes:
+                        type: object
+                        properties:
+                          total_documents: { type: integer }
+                          status_counts: { type: object, additionalProperties: { type: integer } }
+                          needs_attention: { type: integer }
+                          in_pipeline: { type: integer }
+                          straight_through_rate: { type: [number, 'null'], description: Share of pushed invoices with no human review }
+                          avg_step_ms: { type: integer }
+                          pushed_value: { type: array, items: { type: object, properties: { currency: { type: string }, total_minor: { type: integer } } } }
+                          failed_steps_24h: { type: integer }
+                          volume: { type: array, items: { type: object, properties: { date: { type: string, format: date }, upload: { type: integer }, email: { type: integer } } } }
+  /activity:
+    get:
+      tags: [Dashboard]
+      summary: Recent pipeline and user events across documents
+      parameters: [{ $ref: '#/components/parameters/PageSize' }]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { type: array, items: { $ref: '#/components/schemas/Event' } } } } } } }
+
+  /integrations:
+    get:
+      tags: [Integrations]
+      summary: Active OCR / LLM / ERP drivers and pipeline settings
+      responses:
+        '200': { description: OK }
+  /integrations/erp/test:
+    post:
+      tags: [Integrations]
+      summary: Test the company's active ERP connector (admin)
+      responses:
+        '200': { description: Connected }
+        '502': { description: Connection failed }
+
+  /inbound/email:
+    post:
+      tags: [Ingestion]
+      summary: Inbound email webhook
+      description: |
+        Provider-neutral JSON. Authenticate with `X-ExtractIQ-Signature: sha256=<hex HMAC-SHA256 of the raw body using INBOUND_EMAIL_SECRET>`.
+        The tenant is resolved from the recipient address (e.g. `ap-demo@inbound.extractiq.test`).
+      security: []
+      parameters:
+        - { name: X-ExtractIQ-Signature, in: header, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [to]
+              properties:
+                from: { type: string }
+                to: { oneOf: [{ type: string }, { type: array, items: { type: string } }] }
+                subject: { type: string }
+                message_id: { type: string }
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    required: [filename, content_type, content]
+                    properties:
+                      filename: { type: string }
+                      content_type: { type: string, example: application/pdf }
+                      content: { type: string, contentEncoding: base64 }
+      responses:
+        '202': { description: Accepted }
+        '401': { description: Bad signature }
+        '404': { description: Unknown recipient }
+
+  /settings/providers:
+    get:
+      tags: [Settings]
+      summary: The company's OCR and LLM providers (meta lists what this server can run)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/ProviderSettings' }
+                  meta:
+                    type: object
+                    properties:
+                      available: { type: object, properties: { ocr: { type: object, additionalProperties: { type: object, properties: { configured: { type: boolean } } } }, llm: { type: object, additionalProperties: { type: object, properties: { configured: { type: boolean } } } } } }
+                      defaults: { $ref: '#/components/schemas/ProviderSettings' }
+                      models: { type: object, additionalProperties: { type: string } }
+    patch:
+      tags: [Settings]
+      summary: Choose the OCR and LLM providers for new documents (admin; only configured drivers)
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ProviderSettings' } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/ProviderSettings' } } } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /settings/approvals:
+    get:
+      tags: [Settings]
+      summary: Approval limits per role (invoice currency; null = no limit)
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/ApprovalLimits' }, meta: { type: object, properties: { defaults: { $ref: '#/components/schemas/ApprovalLimits' } } } } } } } }
+    patch:
+      tags: [Settings]
+      summary: Update approval limits (admin)
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ApprovalLimits' } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { $ref: '#/components/schemas/ApprovalLimits' } } } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /users/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    patch:
+      tags: [Settings]
+      summary: Change a person's role or own approval limit (admin; a workspace keeps at least one admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role: { type: string, enum: [admin, reviewer, viewer] }
+                approval_limit: { type: [number, 'null'], minimum: 0 }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { data: { type: object, properties: { type: { const: users }, id: { type: string }, attributes: { $ref: '#/components/schemas/WorkspaceUser' } } } } } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /audit-log/export:
+    get:
+      tags: [Security]
+      summary: The audit trail as CSV (admin; at most one year; bank details masked; formula-safe cells)
+      parameters:
+        - { name: from, in: query, schema: { type: string, format: date }, description: 'Default: 29 days before `to`' }
+        - { name: to, in: query, schema: { type: string, format: date }, description: 'Default: today' }
+        - { name: document_id, in: query, schema: { type: integer } }
+      responses:
+        '200': { description: 'CSV: occurred_at, document_id, document_uuid, filename, document_number, step, status, from_status, to_status, user, user_email, duration_ms, attempt, error, changes', content: { text/csv: { schema: { type: string } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+  /health:
+    servers: [{ url: http://localhost:8030/api, description: Local (outside /v1) }]
+    get:
+      tags: [Security]
+      summary: Health for uptime checks and load balancers
+      description: 200 when the database and Redis are up (`status` ok or degraded), 503 when either is down. Storage, Horizon workers and the scheduler heartbeat are reported too.
+      security: []
+      responses:
+        '200': { description: Serving, content: { application/json: { schema: { $ref: '#/components/schemas/Health' } } } }
+        '503': { description: Down, content: { application/json: { schema: { $ref: '#/components/schemas/Health' } } } }
+components:
+  securitySchemes:
+    bearer: { type: http, scheme: bearer, description: 'Sanctum token from POST /auth/login' }
+  parameters:
+    Id: { name: id, in: path, required: true, schema: { type: string } }
+    PageNumber: { name: 'page[number]', in: query, schema: { type: integer, minimum: 1, default: 1 } }
+    PageSize: { name: 'page[size]', in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 25 } }
+  responses:
+    ValidationError: { description: Validation failed, content: { application/json: { schema: { $ref: '#/components/schemas/Errors' } } } }
+    Unauthenticated: { description: Missing or invalid token, content: { application/json: { schema: { $ref: '#/components/schemas/Errors' } } } }
+    Forbidden: { description: Role not allowed, content: { application/json: { schema: { $ref: '#/components/schemas/Errors' } } } }
+    NotFound: { description: Not found (or another tenant's resource), content: { application/json: { schema: { $ref: '#/components/schemas/Errors' } } } }
+    TooManyRequests: { description: Rate limit exceeded (see Retry-After), content: { application/json: { schema: { $ref: '#/components/schemas/Errors' } } } }
+  schemas:
+    ProviderSettings:
+      type: object
+      properties:
+        ocr: { type: string, enum: [pdftext, tesseract, textract] }
+        llm: { type: string, enum: [heuristic, anthropic, openai] }
+    ApprovalLimits:
+      type: object
+      properties:
+        admin: { type: [number, 'null'], example: null }
+        reviewer: { type: [number, 'null'], example: 10000 }
+    WorkspaceUser:
+      type: object
+      properties:
+        name: { type: string }
+        email: { type: string }
+        role: { type: string, enum: [admin, reviewer, viewer] }
+        can_review: { type: boolean }
+        approval_limit: { type: [number, 'null'], description: "The person's own limit (null = the role's)" }
+        effective_approval_limit: { type: [number, 'null'], description: 'What applies: own limit, else the role limit; 0 for viewers' }
+        is_demo: { type: boolean }
+    Health:
+      type: object
+      properties:
+        status: { type: string, enum: [ok, degraded, down] }
+        version: { type: string }
+        time: { type: string, format: date-time }
+        checks:
+          type: object
+          additionalProperties: { type: object, properties: { ok: { type: boolean }, ms: { type: integer }, detail: {} } }
+    DocumentStatus:
+      type: string
+      enum: [received, ocr_done, extracted, needs_review, validated, approved, matched, match_exception, pushed, push_failed, posted, paid, failed, rejected]
+      description: '`failed` = OCR gave up after its retries (reason in last_error); POST /retry moves it back to received. `rejected` = a reviewer rejected it (POST /reopen undoes). `posted` / `paid` are read back from the ERP by the sync.'
+    DocumentType:
+      type: string
+      enum: [invoice, purchase_order, goods_receipt, unknown]
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              status: { type: string }
+              code: { type: string }
+              title: { type: string }
+              detail: { type: string }
+              source: { type: object, properties: { pointer: { type: string, example: /total_minor } } }
+    Paginated:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            page: { type: object, properties: { current: { type: integer }, size: { type: integer }, total: { type: integer }, last: { type: integer } } }
+        links:
+          type: object
+          properties:
+            first: { type: [string, 'null'] }
+            last: { type: [string, 'null'] }
+            prev: { type: [string, 'null'] }
+            next: { type: [string, 'null'] }
+    BBox:
+      type: [array, 'null']
+      items: { type: number, minimum: 0, maximum: 1 }
+      minItems: 4
+      maxItems: 4
+      description: '[x, y, width, height] as ratios of the page'
+    OcrToken:
+      type: object
+      properties:
+        text: { type: string }
+        bbox: { $ref: '#/components/schemas/BBox' }
+        confidence: { type: number, minimum: 0, maximum: 1 }
+    Issue:
+      type: object
+      properties:
+        field: { type: string }
+        code: { type: string, examples: [required, line_math, lines_sum, total_math, duplicate, before_issue, unknown_vendor, low_confidence, missing_po] }
+        message: { type: string }
+    Document:
+      type: object
+      properties:
+        type: { const: documents }
+        id: { type: string }
+        attributes:
+          type: object
+          properties:
+            type: { $ref: '#/components/schemas/DocumentType' }
+            type_label: { type: string }
+            status: { $ref: '#/components/schemas/DocumentStatus' }
+            status_label: { type: string }
+            source: { type: string, enum: [upload, email, api] }
+            declared_type: { type: [string, 'null'] }
+            type_source: { type: [string, 'null'], enum: [declared, classifier, llm, manual, null] }
+            uploaded_by: { type: [string, 'null'] }
+            uploaded_by_name: { type: [string, 'null'] }
+            original_filename: { type: string }
+            mime_type: { type: string }
+            size_bytes: { type: integer }
+            page_count: { type: [integer, 'null'] }
+            vendor_name: { type: [string, 'null'] }
+            document_number: { type: [string, 'null'] }
+            po_number: { type: [string, 'null'] }
+            document_date: { type: [string, 'null'], format: date }
+            due_date: { type: [string, 'null'], format: date }
+            currency: { type: [string, 'null'], example: USD }
+            subtotal_minor: { type: [integer, 'null'] }
+            tax_minor: { type: [integer, 'null'] }
+            total_minor: { type: [integer, 'null'], example: 61560 }
+            confidence: { type: [number, 'null'], description: 'Weakest extracted field (what decides review)' }
+            field_confidence: { type: [object, 'null'], additionalProperties: { type: number }, description: 'Per field, keyed like the editable fields (vendor_name, document_number, total, lines.1 …): min(model confidence, OCR confidence of the source words)' }
+            field_sources: { type: [object, 'null'], additionalProperties: { type: array, items: { type: string } }, description: 'OCR word ids ("p1.w37") each field was read from — use with /pages/{n}/ocr to highlight' }
+            schema_version: { type: [string, 'null'], examples: [invoice.v1] }
+            rule_results:
+              type: array
+              items:
+                type: object
+                properties:
+                  rule: { type: string, examples: [required, line_math, lines_sum, total_math, due_after_issue, tax_id_format, duplicate, vendor_known, missing_po, schema, confidence] }
+                  status: { type: string, enum: [pass, warn, fail] }
+                  message: { type: string }
+                  field: { type: [string, 'null'] }
+            llm_input_tokens: { type: [integer, 'null'] }
+            llm_output_tokens: { type: [integer, 'null'] }
+            llm_cost_usd: { type: [number, 'null'] }
+            hints_used: { type: array, items: { type: object, properties: { field: { type: string }, hint: { type: string }, label: { type: [string, 'null'] } } } }
+            shipping_minor: { type: [integer, 'null'] }
+            payment_terms: { type: [string, 'null'] }
+            ocr_provider: { type: [string, 'null'] }
+            llm_provider: { type: [string, 'null'] }
+            llm_model: { type: [string, 'null'] }
+            validation:
+              type: object
+              properties:
+                errors: { type: array, items: { $ref: '#/components/schemas/Issue' } }
+                warnings: { type: array, items: { $ref: '#/components/schemas/Issue' } }
+            last_error: { type: [string, 'null'] }
+            email_from: { type: [string, 'null'] }
+            email_subject: { type: [string, 'null'] }
+            erp_connector: { type: [string, 'null'] }
+            erp_ref: { type: [string, 'null'] }
+            editable: { type: boolean }
+            vendor_match:
+              type: [object, 'null']
+              description: How the vendor was resolved
+              properties:
+                method: { type: string, enum: [tax_id, name, alias, fuzzy, llm, manual, none] }
+                confidence: { type: [number, 'null'] }
+                candidates: { type: array, items: { type: object, properties: { id: { type: string }, name: { type: string }, score: { type: number } } } }
+                reason: { type: [string, 'null'] }
+            on_hold: { type: boolean }
+            uuid: { type: string, format: uuid, description: 'Stable public id; the ERP push idempotency key' }
+            erp_url: { type: [string, 'null'], description: Link to the bill in the ERP }
+            erp_status: { type: [string, 'null'], enum: [draft, posted, paid, cancelled, null] }
+            erp_status_at: { type: [string, 'null'], format: date-time }
+            paid_at: { type: [string, 'null'], format: date-time }
+            touchless: { type: boolean, description: Approved and pushed without review (touchless rule) }
+            on_hold_at: { type: [string, 'null'], format: date-time }
+            hold_reason: { type: [string, 'null'] }
+            assignee: { type: [object, 'null'], properties: { id: { type: string }, name: { type: string } } }
+            assigned_at: { type: [string, 'null'], format: date-time }
+            rejected_at: { type: [string, 'null'], format: date-time }
+            rejection_reason: { type: [string, 'null'] }
+            sla_due_at: { type: [string, 'null'], format: date-time, description: 'received_at + REVIEW_SLA_HOURS' }
+            extracted: { type: [object, 'null'], description: 'Only on GET /documents/{id}: the wrapped extraction ({value, confidence, source} per field)' }
+            received_at: { type: string, format: date-time }
+            approved_at: { type: [string, 'null'], format: date-time }
+            pushed_at: { type: [string, 'null'], format: date-time }
+            ocr_text: { type: [string, 'null'], description: 'Only on GET /documents/{id}' }
+        relationships:
+          type: object
+          properties:
+            vendor: { type: object, properties: { data: { type: [object, 'null'] } } }
+            lines: { type: object, properties: { data: { type: array, items: { type: object } } } }
+    DocumentUpdate:
+      type: object
+      properties:
+        type: { $ref: '#/components/schemas/DocumentType' }
+        vendor_name: { type: [string, 'null'] }
+        vendor_id: { type: [integer, 'null'] }
+        document_number: { type: [string, 'null'] }
+        po_number: { type: [string, 'null'] }
+        document_date: { type: [string, 'null'], format: date }
+        due_date: { type: [string, 'null'], format: date }
+        currency: { type: [string, 'null'], minLength: 3, maxLength: 3 }
+        subtotal_minor: { type: [integer, 'null'] }
+        tax_minor: { type: [integer, 'null'] }
+        shipping_minor: { type: [integer, 'null'] }
+        payment_terms: { type: [string, 'null'] }
+        total_minor: { type: [integer, 'null'] }
+        accepted:
+          type: array
+          maxItems: 100
+          items: { type: string, examples: [document_date, vendor_tax_id, lines.2] }
+          description: Field keys the reviewer confirmed unchanged (Enter on a low-confidence field)
+        lines:
+          type: array
+          items:
+            type: object
+            required: [description, quantity]
+            properties:
+              sku: { type: [string, 'null'] }
+              description: { type: string }
+              quantity: { type: number }
+              uom: { type: [string, 'null'] }
+              unit_price_minor: { type: [integer, 'null'] }
+              tax_rate: { type: [number, 'null'], description: 'Percent, e.g. 8' }
+              amount_minor: { type: [integer, 'null'] }
+    DocumentLine:
+      type: object
+      properties:
+        type: { const: document-lines }
+        id: { type: string }
+        attributes:
+          type: object
+          properties:
+            line_no: { type: integer }
+            sku: { type: [string, 'null'] }
+            description: { type: string }
+            quantity: { type: number }
+            unit_price_minor: { type: [integer, 'null'] }
+            amount_minor: { type: [integer, 'null'] }
+    Event:
+      type: object
+      properties:
+        type: { const: document-events }
+        id: { type: string }
+        attributes:
+          type: object
+          properties:
+            step: { type: string, examples: [ingest, ocr, extract, validate, review, approve, reject, reopen, reassign, vendor, match, match_accept, match_override, credit_note, hold, release, push, erp_status, retry] }
+            status: { type: string, enum: [succeeded, failed, skipped, info] }
+            from_status: { type: [string, 'null'] }
+            to_status: { type: [string, 'null'] }
+            duration_ms: { type: [integer, 'null'] }
+            attempt: { type: integer }
+            error: { type: [string, 'null'] }
+            meta: { type: [object, 'null'] }
+            user_name: { type: [string, 'null'] }
+            document_filename: { type: [string, 'null'] }
+            created_at: { type: string, format: date-time }
+    Match:
+      type: object
+      properties:
+        type: { const: matches }
+        id: { type: string }
+        attributes:
+          type: object
+          properties:
+            kind: { type: string, enum: [two_way, three_way] }
+            result: { type: string, enum: [matched, exception, accepted] }
+            is_current: { type: boolean }
+            po_method: { type: [string, 'null'], enum: [po_number, vendor_amount, null] }
+            po_confidence: { type: [number, 'null'] }
+            header_issues:
+              type: array
+              items:
+                type: object
+                properties:
+                  code: { type: string, enum: [po_not_found, po_closed, vendor_mismatch, currency_mismatch, total_variance] }
+                  message: { type: string }
+                  expected: { type: integer }
+                  actual: { type: integer }
+                  delta: { type: integer }
+            discrepancies: { type: array, items: { type: object }, description: 'Header issues plus one entry per line that is not matched (code, message, line_no, sku, disputed_minor)' }
+            totals:
+              type: object
+              properties:
+                invoiced_minor: { type: integer, description: Invoice net (subtotal) }
+                expected_minor: { type: integer, description: 'Σ invoiced qty × PO unit price, PO lines only' }
+                delta_minor: { type: integer }
+                disputed_minor: { type: integer, description: 'Money at stake: price differences, quantities beyond tolerance, lines not on the PO' }
+            tolerances: { $ref: '#/components/schemas/MatchTolerances' }
+            line_counts: { type: [object, 'null'], additionalProperties: { type: integer } }
+            accepted: { type: [object, 'null'], properties: { by: { type: string }, at: { type: string, format: date-time }, reason: { type: string } } }
+            credit_note: { type: [object, 'null'], properties: { by: { type: string }, at: { type: string, format: date-time }, amount_minor: { type: integer }, reason: { type: string } } }
+            purchase_order: { type: [object, 'null'], properties: { id: { type: string }, number: { type: string }, status: { type: string }, source: { type: string }, vendor_name: { type: [string, 'null'] }, currency: { type: [string, 'null'] }, total_minor: { type: [integer, 'null'] } } }
+            goods_receipts: { type: array, items: { type: object, properties: { id: { type: string }, number: { type: string }, received_date: { type: [string, 'null'], format: date }, source: { type: string } } }, description: 'Objects on GET /documents/{id}/match; ids elsewhere' }
+            invoice: { type: object }
+            lines: { type: array, items: { $ref: '#/components/schemas/MatchLine' }, description: 'On GET /documents/{id}/match and the action responses' }
+            created_at: { type: string, format: date-time }
+    MatchLine:
+      type: object
+      description: One invoice line beside its PO line and what was received (the three columns of the matching view).
+      properties:
+        id: { type: string }
+        line_no: { type: integer }
+        sku: { type: [string, 'null'] }
+        description: { type: string }
+        method: { type: string, enum: [sku, description, none], description: How the line was paired with its PO line }
+        similarity: { type: [number, 'null'] }
+        result: { type: string, enum: [matched, price_variance, qty_variance, not_received, not_on_po] }
+        issues: { type: array, items: { type: string }, description: 'Every issue on the line, worst first' }
+        ok: { type: boolean, description: Matched or accepted }
+        message: { type: [string, 'null'] }
+        invoice: { type: object, properties: { quantity: { type: number }, unit_price_minor: { type: [integer, 'null'] }, amount_minor: { type: [integer, 'null'] } } }
+        po: { type: [object, 'null'], properties: { line_id: { type: string }, line_no: { type: integer }, sku: { type: [string, 'null'] }, description: { type: string }, quantity: { type: number }, uom: { type: [string, 'null'] }, unit_price_minor: { type: [integer, 'null'] } } }
+        received_qty: { type: [number, 'null'], description: 'null on a 2-way match' }
+        previously_invoiced_qty: { type: number, description: Billed on other matched invoices for the same PO line }
+        deltas: { type: object, properties: { price_minor: { type: [integer, 'null'] }, price_pct: { type: [number, 'null'] }, qty_vs_ordered: { type: [number, 'null'] }, qty_vs_received: { type: [number, 'null'] } } }
+        disputed_minor: { type: integer }
+        accepted: { type: [object, 'null'], properties: { at: { type: string, format: date-time }, reason: { type: string } } }
+    ErpPush:
+      type: object
+      properties:
+        type: { const: erp-pushes }
+        id: { type: string }
+        attributes:
+          type: object
+          properties:
+            connector: { type: string }
+            status: { type: string, enum: [succeeded, failed, dead] }
+            attempt: { type: integer }
+            http_status: { type: [integer, 'null'] }
+            duration_ms: { type: [integer, 'null'] }
+            retryable: { type: [boolean, 'null'] }
+            external_ref: { type: [string, 'null'] }
+            erp_url: { type: [string, 'null'] }
+            error: { type: [string, 'null'] }
+            idempotency_key: { type: string, description: The document uuid }
+            document: { type: [object, 'null'] }
+            request: { type: [object, 'null'], description: 'Only on GET /erp-pushes/{id}' }
+            response: { type: [object, 'null'], description: 'Only on GET /erp-pushes/{id}' }
+            created_at: { type: string, format: date-time }
+    ErpMapping:
+      type: object
+      properties:
+        fields: { type: object, additionalProperties: { type: string }, description: 'Our field (document_number, po_number, document_date, due_date, payment_terms, document_uuid) → ERP field; "" = not sent' }
+        default_account: { type: [string, 'null'] }
+        tax_codes: { type: array, items: { type: object, required: [rate, code], properties: { rate: { type: number }, code: { type: string } } } }
+        cost_centres: { type: array, items: { type: object, required: [vendor_id], properties: { vendor_id: { type: integer }, cost_centre: { type: [string, 'null'] }, account: { type: [string, 'null'] } } } }
+    ErpConnection:
+      type: object
+      properties:
+        connector: { type: string, enum: [mock, odoo, quickbooks, webhook] }
+        label: { type: string }
+        is_active: { type: boolean }
+        configured: { type: boolean }
+        status: { type: string, enum: [connected, error, not_configured, unknown] }
+        status_message: { type: [string, 'null'] }
+        tested_at: { type: [string, 'null'], format: date-time }
+        last_sync_at: { type: [string, 'null'], format: date-time }
+        capabilities: { type: object, properties: { sync_vendors: { type: boolean }, sync_purchase_orders: { type: boolean }, sync_receipts: { type: boolean }, bill_status: { type: boolean }, attachments: { type: boolean } } }
+        summary: { type: object, description: 'Non-secret details (URL, database, realm, webhook host, mock counts)' }
+        mapping: { $ref: '#/components/schemas/ErpMapping' }
+        mapping_targets: { type: [object, 'null'], description: 'Allowed ERP fields per our field; null = free text' }
+    ErpSyncRun:
+      type: object
+      properties:
+        id: { type: string }
+        connector: { type: string }
+        trigger: { type: string, enum: [schedule, manual] }
+        status: { type: string, enum: [running, succeeded, partial, failed] }
+        counts: { type: [object, 'null'], description: '{vendors|purchase_orders|receipts: {created, updated}, bills: {checked, posted, paid, cancelled}, rematched}' }
+        errors: { type: [array, 'null'], items: { type: string } }
+        duration_ms: { type: [integer, 'null'] }
+        started_at: { type: string, format: date-time }
+        finished_at: { type: [string, 'null'], format: date-time }
+    MockBill:
+      type: object
+      properties:
+        id: { type: string }
+        ref: { type: string, examples: [BILL-00031] }
+        vendor_code: { type: string }
+        vendor_name: { type: string }
+        bill_number: { type: string }
+        po_number: { type: [string, 'null'] }
+        currency: { type: string }
+        total_minor: { type: integer }
+        status: { type: string, enum: [draft, posted, paid, cancelled] }
+        lines: { type: array, items: { type: object } }
+        fields: { type: object }
+        attachment_name: { type: [string, 'null'] }
+    Analytics:
+      type: object
+      properties:
+        period: { type: object, properties: { from: { type: string, format: date }, to: { type: string, format: date }, days: { type: integer }, group_by: { type: string }, previous: { type: object } } }
+        kpis:
+          type: object
+          properties:
+            documents_processed: { type: integer, description: 'Received in the period and past OCR + extraction' }
+            documents_received: { type: integer }
+            touchless_rate: { type: [number, 'null'], description: 'Pushed with no human edit (no reviewer correction, accepted variance or vendor change) / pushed' }
+            field_accuracy: { type: [number, 'null'], description: '1 − corrected fields / extracted fields, on documents approved in the period' }
+            avg_processing_ms: { type: [integer, 'null'], description: 'received_at → pushed_at, for documents pushed in the period' }
+            exceptions_open: { type: integer, description: 'Right now (match_exception)' }
+            push_failed_open: { type: integer }
+            cost_per_document_usd: { type: [number, 'null'], description: '(LLM + OCR cost) / documents received' }
+            llm_cost_usd: { type: number }
+            ocr_cost_usd: { type: number }
+            previous: { type: object, description: 'The same KPIs for the previous period' }
+        series: { type: array, items: { type: object, description: 'Per period: received, processed, in_erp / in_progress / in_review / stopped (status groups of that period''s arrivals), pushed, touchless(_rate), fields_total, fields_corrected, field_accuracy, avg_processing_ms, costs, erp_attempts / succeeded / dead' } }
+        processing_distribution: { type: array, items: { type: object, properties: { bucket: { type: string }, label: { type: string }, count: { type: integer } } } }
+        top_vendors: { type: array, items: { type: object, properties: { currency: { type: string }, total_minor: { type: integer }, vendors: { type: array, items: { type: object, properties: { id: { type: [string, 'null'] }, name: { type: string }, spend_minor: { type: integer } } } } } }, description: 'Approved invoices per currency (no conversion), top 8 vendors each' }
+        exception_reasons: { type: array, items: { type: object, properties: { code: { type: string }, count: { type: integer } } } }
+        accuracy_trend: { type: array, items: { type: object, properties: { week: { type: string, format: date }, accuracy: { type: [number, 'null'] }, hinted_accuracy: { type: [number, 'null'], description: 'Documents read with learned vendor hints' }, fields_total: { type: integer }, fields_corrected: { type: integer }, hinted_docs: { type: integer } } } }
+        erp: { type: object, properties: { attempts: { type: integer }, succeeded: { type: integer }, dead: { type: integer }, retried: { type: integer }, success_rate: { type: [number, 'null'] } } }
+        health: { type: object, description: 'Right now: queues (pending / delayed / running per queue and job class), documents waiting per stage, failed jobs, ERP pushes in the last 24 h, last sync per connector' }
+    AutomationSettings:
+      type: object
+      properties:
+        touchless: { type: boolean, description: 'Approve validated invoices from known vendors below the limit without review; they are pushed if they match' }
+        touchless_max_total: { type: number, minimum: 0, description: Major units of the invoice currency }
+    MatchTolerances:
+      type: object
+      properties:
+        price_tolerance_pct: { type: number, minimum: 0, maximum: 100 }
+        price_tolerance_abs: { type: number, minimum: 0, description: 'Major units; the larger of the % and this amount applies' }
+        qty_tolerance_pct: { type: number, minimum: 0, maximum: 100 }
+        total_tolerance_abs: { type: number, minimum: 0, description: Major units }
+        mode: { type: string, enum: [auto, two_way, three_way], description: 'auto = 3-way once the PO has receipts' }
+        accept_role: { type: string, enum: [admin, reviewer] }
+    PurchaseOrder:
+      type: object
+      properties:
+        type: { const: purchase-orders }
+        id: { type: string }
+        attributes:
+          type: object
+          properties:
+            number: { type: string }
+            vendor: { type: [object, 'null'], properties: { id: { type: string }, name: { type: string } } }
+            order_date: { type: [string, 'null'], format: date }
+            expected_date: { type: [string, 'null'], format: date }
+            currency: { type: [string, 'null'] }
+            subtotal_minor: { type: [integer, 'null'] }
+            total_minor: { type: [integer, 'null'] }
+            status: { type: string, enum: [open, closed, cancelled] }
+            source: { type: string, enum: [csv, erp, document, manual] }
+            erp_ref: { type: [string, 'null'] }
+            line_count: { type: integer }
+            receipt_count: { type: integer }
+            received_pct: { type: number }
+            billed_pct: { type: number }
+            received_minor: { type: integer }
+            billed_minor: { type: integer }
+            exception_count: { type: integer }
+    Vendor:
+      type: object
+      properties:
+        type: { const: vendors }
+        id: { type: string }
+        attributes:
+          type: object
+          properties:
+            name: { type: string }
+            tax_id: { type: [string, 'null'] }
+            email: { type: [string, 'null'] }
+            default_currency: { type: string }
+            erp_ref: { type: [string, 'null'] }
+            aliases: { type: array, items: { type: string } }
+            source: { type: string, enum: [manual, csv, erp, document] }
+            documents_count: { type: integer }
+    VendorInput:
+      type: object
+      properties:
+        name: { type: string }
+        tax_id: { type: [string, 'null'] }
+        email: { type: [string, 'null'], format: email }
+        default_currency: { type: string, minLength: 3, maxLength: 3 }
+        erp_ref: { type: [string, 'null'], description: 'Connector-specific id, e.g. odoo:42 or qbo:58' }
+        aliases: { type: array, items: { type: string }, description: 'Other names the vendor prints on documents' }
+    User:
+      type: object
+      properties:
+        type: { const: users }
+        id: { type: string }
+        attributes:
+          type: object
+          properties:
+            name: { type: string }
+            email: { type: string }
+            role: { type: string, enum: [admin, reviewer, viewer] }
+            approval_limit: { type: [number, 'null'], description: 'Highest invoice total this user may approve, in the invoice currency; null = no limit, 0 = cannot approve' }
+            is_demo: { type: boolean, description: 'The read-only public demo visitor' }
+            company: { type: object, properties: { id: { type: string }, name: { type: string }, base_currency: { type: string }, inbound_email: { type: string } } }

@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://extractiq.test/schemas/purchase_order.v1.json",
+  "x-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "Purchase order",
+  "x-document-type": "purchase_order",
+  "properties": {
+    "vendor": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The supplier.",
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Legal or trading name of the supplier (never the buyer)."
+        },
+        "tax_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Supplier tax / VAT / EIN number exactly as printed."
+        },
+        "address": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Supplier postal address on one line."
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Supplier billing email address.",
+          "format": "email"
+        }
+      },
+      "required": [
+        "name",
+        "tax_id",
+        "address",
+        "email"
+      ]
+    },
+    "po_number": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The purchase order's own number."
+    },
+    "order_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Order date, ISO 8601.",
+      "format": "date"
+    },
+    "delivery_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Requested delivery date, ISO 8601.",
+      "format": "date"
+    },
+    "ship_to": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Delivery address on one line."
+    },
+    "currency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "subtotal": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Total before tax and shipping. Decimal number in major units, no symbols or thousands separators."
+    },
+    "tax_total": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Total tax. Decimal number in major units, no symbols or thousands separators."
+    },
+    "shipping": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Shipping charge. Decimal number in major units, no symbols or thousands separators."
+    },
+    "total": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Order total. Decimal number in major units, no symbols or thousands separators."
+    },
+    "payment_terms": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Payment terms as printed."
+    },
+    "line_items": {
+      "type": "array",
+      "description": "Line items in document order.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "line_no": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "1-based position of the line on the document."
+          },
+          "sku": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Supplier item code / SKU / part number."
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Item description."
+          },
+          "qty": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Quantity."
+          },
+          "uom": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Unit of measure (e.g. EA, BOX, KG, HR) if printed."
+          },
+          "unit_price": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Unit price. Decimal number in major units, no symbols or thousands separators."
+          },
+          "tax_rate": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Tax rate in percent for the line (8 means 8%), if printed."
+          },
+          "amount": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Line amount (qty \u00d7 unit price), as printed. Decimal number in major units, no symbols or thousands separators."
+          }
+        },
+        "required": [
+          "line_no",
+          "sku",
+          "description",
+          "qty",
+          "uom",
+          "unit_price",
+          "tax_rate",
+          "amount"
+        ]
+      }
+    }
+  },
+  "required": [
+    "vendor",
+    "po_number",
+    "order_date",
+    "delivery_date",
+    "ship_to",
+    "currency",
+    "subtotal",
+    "tax_total",
+    "shipping",
+    "total",
+    "payment_terms",
+    "line_items"
+  ]
+}

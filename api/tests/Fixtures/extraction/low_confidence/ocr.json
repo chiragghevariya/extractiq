@@ -1,0 +1,1134 @@
+{
+    "source": "14-scan-ncs-9050.png",
+    "mime": "image/png",
+    "ocr_text": "INVOICE  Nimbus Cloud Services Inc\n1 Data Center Blvd\nSAMPLE DOCUMENT - FICTIONAL DATA  Hilltop, ST 00003\nInvoice No: NCS-9050\nInvoice Date: 2026-11-13\nDue Date: 2026-12-13\nVendor: Nimbus Cloud Services Inc\nBill To: Demo Manufacturing Co\nCurrency: USD\nTax ID: 66-1112223\nSKU Description  Qty Unit Price  Amount\nNCS-VN-M Managed VM medium (monthly)  2  145.00  290.00\nNCS-SUP-G Gold support plan (monthly)  1  250.00  250.00\nSubtotal: 540.00\nTax (0%): 0.00\nTotal: 540.00",
+    "pages": [
+        {
+            "page_number": 1,
+            "provider": "tesseract",
+            "text": "INVOICE  Nimbus Cloud Services Inc\n1 Data Center Blvd\nSAMPLE DOCUMENT - FICTIONAL DATA  Hilltop, ST 00003\nInvoice No: NCS-9050\nInvoice Date: 2026-11-13\nDue Date: 2026-12-13\nVendor: Nimbus Cloud Services Inc\nBill To: Demo Manufacturing Co\nCurrency: USD\nTax ID: 66-1112223\nSKU Description  Qty Unit Price  Amount\nNCS-VN-M Managed VM medium (monthly)  2  145.00  290.00\nNCS-SUP-G Gold support plan (monthly)  1  250.00  250.00\nSubtotal: 540.00\nTax (0%): 0.00\nTotal: 540.00",
+            "ocr": {
+                "words": [
+                    {
+                        "text": "INVOICE",
+                        "bbox": [
+                            0.0868,
+                            0.0466,
+                            0.1451,
+                            0.0202
+                        ],
+                        "confidence": 0.9605
+                    },
+                    {
+                        "text": "SAMPLE",
+                        "bbox": [
+                            0.0846,
+                            0.08,
+                            0.0593,
+                            0.0078
+                        ],
+                        "confidence": 0.8246
+                    },
+                    {
+                        "text": "DOCUMENT",
+                        "bbox": [
+                            0.1505,
+                            0.08,
+                            0.0857,
+                            0.0078
+                        ],
+                        "confidence": 0.9322
+                    },
+                    {
+                        "text": "-",
+                        "bbox": [
+                            0.2418,
+                            0.0847,
+                            0.0033,
+                            0.0008
+                        ],
+                        "confidence": 0.9266
+                    },
+                    {
+                        "text": "FICTIONAL",
+                        "bbox": [
+                            0.2516,
+                            0.08,
+                            0.0769,
+                            0.0078
+                        ],
+                        "confidence": 0.9506
+                    },
+                    {
+                        "text": "DATA",
+                        "bbox": [
+                            0.3341,
+                            0.08,
+                            0.0341,
+                            0.0078
+                        ],
+                        "confidence": 0.943
+                    },
+                    {
+                        "text": "Invoice",
+                        "bbox": [
+                            0.0857,
+                            0.1305,
+                            0.0495,
+                            0.0085
+                        ],
+                        "confidence": 0.9627
+                    },
+                    {
+                        "text": "No:",
+                        "bbox": [
+                            0.1418,
+                            0.1305,
+                            0.0242,
+                            0.0085
+                        ],
+                        "confidence": 0.9194
+                    },
+                    {
+                        "text": "NCS-9050",
+                        "bbox": [
+                            0.1725,
+                            0.1305,
+                            0.0758,
+                            0.0085
+                        ],
+                        "confidence": 0.9065
+                    },
+                    {
+                        "text": "Invoice",
+                        "bbox": [
+                            0.0857,
+                            0.1476,
+                            0.0495,
+                            0.0085
+                        ],
+                        "confidence": 0.9654
+                    },
+                    {
+                        "text": "Date:",
+                        "bbox": [
+                            0.1418,
+                            0.1476,
+                            0.0385,
+                            0.0085
+                        ],
+                        "confidence": 0.9684
+                    },
+                    {
+                        "text": "2026-11-13",
+                        "bbox": [
+                            0.1857,
+                            0.1476,
+                            0.0846,
+                            0.0085
+                        ],
+                        "confidence": 0.7446
+                    },
+                    {
+                        "text": "Due",
+                        "bbox": [
+                            0.0846,
+                            0.1655,
+                            0.0297,
+                            0.0085
+                        ],
+                        "confidence": 0.9661
+                    },
+                    {
+                        "text": "Date:",
+                        "bbox": [
+                            0.1209,
+                            0.1655,
+                            0.0374,
+                            0.0085
+                        ],
+                        "confidence": 0.9661
+                    },
+                    {
+                        "text": "2026-12-13",
+                        "bbox": [
+                            0.1637,
+                            0.1655,
+                            0.0846,
+                            0.0085
+                        ],
+                        "confidence": 0.9652
+                    },
+                    {
+                        "text": "Vendor:",
+                        "bbox": [
+                            0.0846,
+                            0.1834,
+                            0.056,
+                            0.0085
+                        ],
+                        "confidence": 0.964
+                    },
+                    {
+                        "text": "Nimbus",
+                        "bbox": [
+                            0.1473,
+                            0.1834,
+                            0.0538,
+                            0.0085
+                        ],
+                        "confidence": 0.9617
+                    },
+                    {
+                        "text": "Cloud",
+                        "bbox": [
+                            0.2077,
+                            0.1834,
+                            0.0418,
+                            0.0085
+                        ],
+                        "confidence": 0.9662
+                    },
+                    {
+                        "text": "Services",
+                        "bbox": [
+                            0.256,
+                            0.1834,
+                            0.0637,
+                            0.0085
+                        ],
+                        "confidence": 0.9592
+                    },
+                    {
+                        "text": "Inc",
+                        "bbox": [
+                            0.3264,
+                            0.1834,
+                            0.0209,
+                            0.0085
+                        ],
+                        "confidence": 0.9592
+                    },
+                    {
+                        "text": "Bill",
+                        "bbox": [
+                            0.0846,
+                            0.2012,
+                            0.0418,
+                            0.0085
+                        ],
+                        "confidence": 0.9115
+                    },
+                    {
+                        "text": "To:",
+                        "bbox": [
+                            0.1165,
+                            0.1935,
+                            0.0209,
+                            0.0241
+                        ],
+                        "confidence": 0.9649
+                    },
+                    {
+                        "text": "Demo",
+                        "bbox": [
+                            0.1374,
+                            0.2012,
+                            0.0429,
+                            0.0085
+                        ],
+                        "confidence": 0.8896
+                    },
+                    {
+                        "text": "Manufacturing",
+                        "bbox": [
+                            0.1868,
+                            0.2012,
+                            0.1033,
+                            0.0109
+                        ],
+                        "confidence": 0.858
+                    },
+                    {
+                        "text": "Co",
+                        "bbox": [
+                            0.2967,
+                            0.2012,
+                            0.0198,
+                            0.0085
+                        ],
+                        "confidence": 0.7615
+                    },
+                    {
+                        "text": "Currency:",
+                        "bbox": [
+                            0.0846,
+                            0.2191,
+                            0.0714,
+                            0.0109
+                        ],
+                        "confidence": 0.9558
+                    },
+                    {
+                        "text": "USD",
+                        "bbox": [
+                            0.1615,
+                            0.2191,
+                            0.0341,
+                            0.0085
+                        ],
+                        "confidence": 0.9632
+                    },
+                    {
+                        "text": "Tax",
+                        "bbox": [
+                            0.0835,
+                            0.237,
+                            0.0253,
+                            0.0085
+                        ],
+                        "confidence": 0.9672
+                    },
+                    {
+                        "text": "ID:",
+                        "bbox": [
+                            0.1165,
+                            0.237,
+                            0.0187,
+                            0.0085
+                        ],
+                        "confidence": 0.8821
+                    },
+                    {
+                        "text": "66-1112223",
+                        "bbox": [
+                            0.1407,
+                            0.237,
+                            0.0879,
+                            0.0085
+                        ],
+                        "confidence": 0.8905
+                    },
+                    {
+                        "text": "SKU",
+                        "bbox": [
+                            0.0945,
+                            0.2735,
+                            0.0264,
+                            0.0062
+                        ],
+                        "confidence": 0.9265
+                    },
+                    {
+                        "text": "Description",
+                        "bbox": [
+                            0.2121,
+                            0.2727,
+                            0.0989,
+                            0.0093
+                        ],
+                        "confidence": 0.9441
+                    },
+                    {
+                        "text": "NCS-VN-M",
+                        "bbox": [
+                            0.0945,
+                            0.2906,
+                            0.0714,
+                            0.0218
+                        ],
+                        "confidence": 0
+                    },
+                    {
+                        "text": "Managed",
+                        "bbox": [
+                            0.2121,
+                            0.2984,
+                            0.0626,
+                            0.0093
+                        ],
+                        "confidence": 0.968
+                    },
+                    {
+                        "text": "VM",
+                        "bbox": [
+                            0.2846,
+                            0.2991,
+                            0.0176,
+                            0.0062
+                        ],
+                        "confidence": 0.9628
+                    },
+                    {
+                        "text": "medium",
+                        "bbox": [
+                            0.3121,
+                            0.2984,
+                            0.0538,
+                            0.007
+                        ],
+                        "confidence": 0.9628
+                    },
+                    {
+                        "text": "(monthly)",
+                        "bbox": [
+                            0.378,
+                            0.2984,
+                            0.0758,
+                            0.0093
+                        ],
+                        "confidence": 0.9616
+                    },
+                    {
+                        "text": "NCS-SUP-G",
+                        "bbox": [
+                            0.0945,
+                            0.317,
+                            0.0802,
+                            0.0062
+                        ],
+                        "confidence": 0.8964
+                    },
+                    {
+                        "text": "Gold",
+                        "bbox": [
+                            0.2121,
+                            0.3162,
+                            0.0352,
+                            0.007
+                        ],
+                        "confidence": 0.1201
+                    },
+                    {
+                        "text": "support",
+                        "bbox": [
+                            0.2582,
+                            0.317,
+                            0.0615,
+                            0.0085
+                        ],
+                        "confidence": 0.9643
+                    },
+                    {
+                        "text": "plan",
+                        "bbox": [
+                            0.3308,
+                            0.3162,
+                            0.0341,
+                            0.0093
+                        ],
+                        "confidence": 0.9643
+                    },
+                    {
+                        "text": "(monthly)",
+                        "bbox": [
+                            0.378,
+                            0.3162,
+                            0.0758,
+                            0.0093
+                        ],
+                        "confidence": 0.9558
+                    },
+                    {
+                        "text": "Nimbus",
+                        "bbox": [
+                            0.678,
+                            0.0474,
+                            0.0648,
+                            0.0093
+                        ],
+                        "confidence": 0.9659
+                    },
+                    {
+                        "text": "Cloud",
+                        "bbox": [
+                            0.7505,
+                            0.0466,
+                            0.0495,
+                            0.0101
+                        ],
+                        "confidence": 0.9636
+                    },
+                    {
+                        "text": "Services",
+                        "bbox": [
+                            0.8077,
+                            0.0474,
+                            0.0736,
+                            0.0093
+                        ],
+                        "confidence": 0.9699
+                    },
+                    {
+                        "text": "Inc",
+                        "bbox": [
+                            0.8901,
+                            0.0474,
+                            0.0231,
+                            0.0093
+                        ],
+                        "confidence": 0.9665
+                    },
+                    {
+                        "text": "Qty",
+                        "bbox": [
+                            0.5934,
+                            0.2735,
+                            0.0253,
+                            0.0085
+                        ],
+                        "confidence": 0.9012
+                    },
+                    {
+                        "text": "Unit",
+                        "bbox": [
+                            0.6297,
+                            0.2735,
+                            0.0341,
+                            0.0062
+                        ],
+                        "confidence": 0.9583
+                    },
+                    {
+                        "text": "Price",
+                        "bbox": [
+                            0.6747,
+                            0.2727,
+                            0.044,
+                            0.007
+                        ],
+                        "confidence": 0.9534
+                    },
+                    {
+                        "text": "2",
+                        "bbox": [
+                            0.6121,
+                            0.2984,
+                            0.0055,
+                            0.007
+                        ],
+                        "confidence": 0.968
+                    },
+                    {
+                        "text": "1",
+                        "bbox": [
+                            0.6132,
+                            0.3162,
+                            0.0055,
+                            0.007
+                        ],
+                        "confidence": 0.7913
+                    },
+                    {
+                        "text": "145.00",
+                        "bbox": [
+                            0.667,
+                            0.2984,
+                            0.0505,
+                            0.007
+                        ],
+                        "confidence": 0.8961
+                    },
+                    {
+                        "text": "250.00",
+                        "bbox": [
+                            0.6659,
+                            0.3162,
+                            0.0516,
+                            0.007
+                        ],
+                        "confidence": 0.9101
+                    },
+                    {
+                        "text": "1",
+                        "bbox": [
+                            0.789,
+                            0.066,
+                            0.0033,
+                            0.0078
+                        ],
+                        "confidence": 0.8954
+                    },
+                    {
+                        "text": "Data",
+                        "bbox": [
+                            0.8011,
+                            0.066,
+                            0.0308,
+                            0.0078
+                        ],
+                        "confidence": 0.926
+                    },
+                    {
+                        "text": "Center",
+                        "bbox": [
+                            0.8363,
+                            0.066,
+                            0.0451,
+                            0.0078
+                        ],
+                        "confidence": 0.9263
+                    },
+                    {
+                        "text": "Blvd",
+                        "bbox": [
+                            0.8868,
+                            0.066,
+                            0.0275,
+                            0.0078
+                        ],
+                        "confidence": 0.7556
+                    },
+                    {
+                        "text": "Hilltop,",
+                        "bbox": [
+                            0.8011,
+                            0.0785,
+                            0.0429,
+                            0.0101
+                        ],
+                        "confidence": 0.919
+                    },
+                    {
+                        "text": "ST",
+                        "bbox": [
+                            0.8505,
+                            0.0785,
+                            0.0176,
+                            0.0078
+                        ],
+                        "confidence": 0.8873
+                    },
+                    {
+                        "text": "00003",
+                        "bbox": [
+                            0.8736,
+                            0.0785,
+                            0.0407,
+                            0.0078
+                        ],
+                        "confidence": 0.7993
+                    },
+                    {
+                        "text": "Amount",
+                        "bbox": [
+                            0.7736,
+                            0.2735,
+                            0.0538,
+                            0.0062
+                        ],
+                        "confidence": 0.9528
+                    },
+                    {
+                        "text": "290.00",
+                        "bbox": [
+                            0.7747,
+                            0.2984,
+                            0.0516,
+                            0.007
+                        ],
+                        "confidence": 0.9431
+                    },
+                    {
+                        "text": "250.00",
+                        "bbox": [
+                            0.7747,
+                            0.3162,
+                            0.0516,
+                            0.007
+                        ],
+                        "confidence": 0.9101
+                    },
+                    {
+                        "text": "Subtotal:",
+                        "bbox": [
+                            0.7945,
+                            0.3512,
+                            0.0593,
+                            0.0085
+                        ],
+                        "confidence": 0.9222
+                    },
+                    {
+                        "text": "540.00",
+                        "bbox": [
+                            0.8637,
+                            0.3512,
+                            0.0505,
+                            0.0085
+                        ],
+                        "confidence": 0.9222
+                    },
+                    {
+                        "text": "Tax",
+                        "bbox": [
+                            0.8077,
+                            0.3699,
+                            0.0253,
+                            0.0085
+                        ],
+                        "confidence": 0.9661
+                    },
+                    {
+                        "text": "(0%):",
+                        "bbox": [
+                            0.8396,
+                            0.3699,
+                            0.033,
+                            0.0109
+                        ],
+                        "confidence": 0.9157
+                    },
+                    {
+                        "text": "0.00",
+                        "bbox": [
+                            0.8824,
+                            0.3699,
+                            0.0319,
+                            0.0085
+                        ],
+                        "confidence": 0.9157
+                    },
+                    {
+                        "text": "Total:",
+                        "bbox": [
+                            0.8154,
+                            0.3893,
+                            0.0363,
+                            0.0085
+                        ],
+                        "confidence": 0.966
+                    },
+                    {
+                        "text": "540.00",
+                        "bbox": [
+                            0.8637,
+                            0.3893,
+                            0.0505,
+                            0.0085
+                        ],
+                        "confidence": 0.9122
+                    }
+                ],
+                "lines": [
+                    {
+                        "text": "INVOICE",
+                        "bbox": [
+                            0.0868,
+                            0.0466,
+                            0.1451,
+                            0.0202
+                        ],
+                        "confidence": 0.9605
+                    },
+                    {
+                        "text": "Nimbus Cloud Services Inc",
+                        "bbox": [
+                            0.678,
+                            0.0466,
+                            0.2352,
+                            0.0101
+                        ],
+                        "confidence": 0.9665
+                    },
+                    {
+                        "text": "1 Data Center Blvd",
+                        "bbox": [
+                            0.789,
+                            0.066,
+                            0.1253,
+                            0.0078
+                        ],
+                        "confidence": 0.8758
+                    },
+                    {
+                        "text": "Hilltop, ST 00003",
+                        "bbox": [
+                            0.8011,
+                            0.0785,
+                            0.1132,
+                            0.0101
+                        ],
+                        "confidence": 0.8685
+                    },
+                    {
+                        "text": "SAMPLE DOCUMENT - FICTIONAL DATA",
+                        "bbox": [
+                            0.0846,
+                            0.08,
+                            0.2836,
+                            0.0078
+                        ],
+                        "confidence": 0.9154
+                    },
+                    {
+                        "text": "Invoice No: NCS-9050",
+                        "bbox": [
+                            0.0857,
+                            0.1305,
+                            0.1626,
+                            0.0085
+                        ],
+                        "confidence": 0.9295
+                    },
+                    {
+                        "text": "Invoice Date: 2026-11-13",
+                        "bbox": [
+                            0.0857,
+                            0.1476,
+                            0.1846,
+                            0.0085
+                        ],
+                        "confidence": 0.8928
+                    },
+                    {
+                        "text": "Due Date: 2026-12-13",
+                        "bbox": [
+                            0.0846,
+                            0.1655,
+                            0.1637,
+                            0.0085
+                        ],
+                        "confidence": 0.9658
+                    },
+                    {
+                        "text": "Vendor: Nimbus Cloud Services Inc",
+                        "bbox": [
+                            0.0846,
+                            0.1834,
+                            0.2627,
+                            0.0085
+                        ],
+                        "confidence": 0.9621
+                    },
+                    {
+                        "text": "Bill To: Demo Manufacturing Co",
+                        "bbox": [
+                            0.0846,
+                            0.1935,
+                            0.2319,
+                            0.0241
+                        ],
+                        "confidence": 0.8771
+                    },
+                    {
+                        "text": "Currency: USD",
+                        "bbox": [
+                            0.0846,
+                            0.2191,
+                            0.111,
+                            0.0109
+                        ],
+                        "confidence": 0.9595
+                    },
+                    {
+                        "text": "Tax ID: 66-1112223",
+                        "bbox": [
+                            0.0835,
+                            0.237,
+                            0.1451,
+                            0.0085
+                        ],
+                        "confidence": 0.9133
+                    },
+                    {
+                        "text": "SKU Description",
+                        "bbox": [
+                            0.0945,
+                            0.2727,
+                            0.2165,
+                            0.0093
+                        ],
+                        "confidence": 0.9353
+                    },
+                    {
+                        "text": "Qty Unit Price",
+                        "bbox": [
+                            0.5934,
+                            0.2727,
+                            0.1253,
+                            0.0093
+                        ],
+                        "confidence": 0.9376
+                    },
+                    {
+                        "text": "Amount",
+                        "bbox": [
+                            0.7736,
+                            0.2735,
+                            0.0538,
+                            0.0062
+                        ],
+                        "confidence": 0.9528
+                    },
+                    {
+                        "text": "NCS-VN-M Managed VM medium (monthly)",
+                        "bbox": [
+                            0.0945,
+                            0.2906,
+                            0.3593,
+                            0.0218
+                        ],
+                        "confidence": 0.771
+                    },
+                    {
+                        "text": "2",
+                        "bbox": [
+                            0.6121,
+                            0.2984,
+                            0.0055,
+                            0.007
+                        ],
+                        "confidence": 0.968
+                    },
+                    {
+                        "text": "145.00",
+                        "bbox": [
+                            0.667,
+                            0.2984,
+                            0.0505,
+                            0.007
+                        ],
+                        "confidence": 0.8961
+                    },
+                    {
+                        "text": "290.00",
+                        "bbox": [
+                            0.7747,
+                            0.2984,
+                            0.0516,
+                            0.007
+                        ],
+                        "confidence": 0.9431
+                    },
+                    {
+                        "text": "NCS-SUP-G Gold support plan (monthly)",
+                        "bbox": [
+                            0.0945,
+                            0.3162,
+                            0.3593,
+                            0.0093
+                        ],
+                        "confidence": 0.7802
+                    },
+                    {
+                        "text": "1",
+                        "bbox": [
+                            0.6132,
+                            0.3162,
+                            0.0055,
+                            0.007
+                        ],
+                        "confidence": 0.7913
+                    },
+                    {
+                        "text": "250.00",
+                        "bbox": [
+                            0.6659,
+                            0.3162,
+                            0.0516,
+                            0.007
+                        ],
+                        "confidence": 0.9101
+                    },
+                    {
+                        "text": "250.00",
+                        "bbox": [
+                            0.7747,
+                            0.3162,
+                            0.0516,
+                            0.007
+                        ],
+                        "confidence": 0.9101
+                    },
+                    {
+                        "text": "Subtotal: 540.00",
+                        "bbox": [
+                            0.7945,
+                            0.3512,
+                            0.1197,
+                            0.0085
+                        ],
+                        "confidence": 0.9222
+                    },
+                    {
+                        "text": "Tax (0%): 0.00",
+                        "bbox": [
+                            0.8077,
+                            0.3699,
+                            0.1066,
+                            0.0109
+                        ],
+                        "confidence": 0.9325
+                    },
+                    {
+                        "text": "Total: 540.00",
+                        "bbox": [
+                            0.8154,
+                            0.3893,
+                            0.0988,
+                            0.0085
+                        ],
+                        "confidence": 0.9391
+                    }
+                ],
+                "key_values": [
+                    {
+                        "key": "Invoice No",
+                        "value": "NCS-9050",
+                        "confidence": 0.9295,
+                        "key_bbox": [
+                            0.0857,
+                            0.1305,
+                            0.0803,
+                            0.0085
+                        ],
+                        "value_bbox": [
+                            0.1725,
+                            0.1305,
+                            0.0758,
+                            0.0085
+                        ]
+                    },
+                    {
+                        "key": "Invoice Date",
+                        "value": "2026-11-13",
+                        "confidence": 0.8928,
+                        "key_bbox": [
+                            0.0857,
+                            0.1476,
+                            0.0946,
+                            0.0085
+                        ],
+                        "value_bbox": [
+                            0.1857,
+                            0.1476,
+                            0.0846,
+                            0.0085
+                        ]
+                    },
+                    {
+                        "key": "Due Date",
+                        "value": "2026-12-13",
+                        "confidence": 0.9658,
+                        "key_bbox": [
+                            0.0846,
+                            0.1655,
+                            0.0737,
+                            0.0085
+                        ],
+                        "value_bbox": [
+                            0.1637,
+                            0.1655,
+                            0.0846,
+                            0.0085
+                        ]
+                    },
+                    {
+                        "key": "Vendor",
+                        "value": "Nimbus Cloud Services Inc",
+                        "confidence": 0.9621,
+                        "key_bbox": [
+                            0.0846,
+                            0.1834,
+                            0.056,
+                            0.0085
+                        ],
+                        "value_bbox": [
+                            0.1473,
+                            0.1834,
+                            0.2,
+                            0.0085
+                        ]
+                    },
+                    {
+                        "key": "Bill To",
+                        "value": "Demo Manufacturing Co",
+                        "confidence": 0.8771,
+                        "key_bbox": [
+                            0.0846,
+                            0.1935,
+                            0.0528,
+                            0.0241
+                        ],
+                        "value_bbox": [
+                            0.1374,
+                            0.2012,
+                            0.1791,
+                            0.0109
+                        ]
+                    },
+                    {
+                        "key": "Currency",
+                        "value": "USD",
+                        "confidence": 0.9595,
+                        "key_bbox": [
+                            0.0846,
+                            0.2191,
+                            0.0714,
+                            0.0109
+                        ],
+                        "value_bbox": [
+                            0.1615,
+                            0.2191,
+                            0.0341,
+                            0.0085
+                        ]
+                    },
+                    {
+                        "key": "Tax ID",
+                        "value": "66-1112223",
+                        "confidence": 0.9133,
+                        "key_bbox": [
+                            0.0835,
+                            0.237,
+                            0.0517,
+                            0.0085
+                        ],
+                        "value_bbox": [
+                            0.1407,
+                            0.237,
+                            0.0879,
+                            0.0085
+                        ]
+                    },
+                    {
+                        "key": "Subtotal",
+                        "value": "540.00",
+                        "confidence": 0.9222,
+                        "key_bbox": [
+                            0.7945,
+                            0.3512,
+                            0.0593,
+                            0.0085
+                        ],
+                        "value_bbox": [
+                            0.8637,
+                            0.3512,
+                            0.0505,
+                            0.0085
+                        ]
+                    },
+                    {
+                        "key": "Total",
+                        "value": "540.00",
+                        "confidence": 0.9391,
+                        "key_bbox": [
+                            0.8154,
+                            0.3893,
+                            0.0363,
+                            0.0085
+                        ],
+                        "value_bbox": [
+                            0.8637,
+                            0.3893,
+                            0.0505,
+                            0.0085
+                        ]
+                    }
+                ],
+                "tables": []
+            }
+        }
+    ]
+}

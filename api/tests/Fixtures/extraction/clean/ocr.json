@@ -1,0 +1,1421 @@
+{
+    "source": "03-inv-k-2041-kestrel-3way-match.pdf",
+    "mime": "application/pdf",
+    "ocr_text": "INVOICE                                                                                  Kestrel Industrial Parts LLC\n                                                                                                       42 Foundry Road\nSAMPLE DOCUMENT - FICTIONAL DATA                                                                     Riverton, ST 00001\n\n\n\nInvoice No: INV-K-2041\nInvoice Date: 2026-11-03\nDue Date: 2026-12-03\nPO Number: PO-1001\nVendor: Kestrel Industrial Parts LLC\nBill To: Demo Manufacturing Co.\nCurrency: USD\nTax ID: 88-1234567\n\n SKU             Description                                                  Qty Unit Price        Amount\n\n KIP-1001        Hex bolt M8 x 40, zinc                                       500         0.42      210.00\n KIP-1002        Flange nut M8                                                500         0.18       90.00\n KIP-2040        Bearing 6204-2RS                                              40         6.75      270.00\n\n\n                                                                                                      Subtotal: 570.00\n                                                                                                       Tax (8%): 45.60\n                                                                                                         Total: 615.60\n\n\n\n\n                                       Please pay by 2026-12-03. Bank details on file.",
+    "pages": [
+        {
+            "page_number": 1,
+            "provider": "pdftext",
+            "text": "INVOICE                                                                                  Kestrel Industrial Parts LLC\n                                                                                                       42 Foundry Road\nSAMPLE DOCUMENT - FICTIONAL DATA                                                                     Riverton, ST 00001\n\n\n\nInvoice No: INV-K-2041\nInvoice Date: 2026-11-03\nDue Date: 2026-12-03\nPO Number: PO-1001\nVendor: Kestrel Industrial Parts LLC\nBill To: Demo Manufacturing Co.\nCurrency: USD\nTax ID: 88-1234567\n\n SKU             Description                                                  Qty Unit Price        Amount\n\n KIP-1001        Hex bolt M8 x 40, zinc                                       500         0.42      210.00\n KIP-1002        Flange nut M8                                                500         0.18       90.00\n KIP-2040        Bearing 6204-2RS                                              40         6.75      270.00\n\n\n                                                                                                      Subtotal: 570.00\n                                                                                                       Tax (8%): 45.60\n                                                                                                         Total: 615.60\n\n\n\n\n                                       Please pay by 2026-12-03. Bank details on file.",
+            "ocr": {
+                "words": [
+                    {
+                        "text": "INVOICE",
+                        "bbox": [
+                            0.084,
+                            0.0475,
+                            0.1501,
+                            0.0242
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Kestrel",
+                        "bbox": [
+                            0.6726,
+                            0.0475,
+                            0.0624,
+                            0.0121
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Industrial",
+                        "bbox": [
+                            0.7401,
+                            0.0475,
+                            0.0832,
+                            0.0121
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Parts",
+                        "bbox": [
+                            0.8284,
+                            0.0475,
+                            0.046,
+                            0.0121
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "LLC",
+                        "bbox": [
+                            0.8796,
+                            0.0475,
+                            0.0359,
+                            0.0121
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "42",
+                        "bbox": [
+                            0.7987,
+                            0.0665,
+                            0.0168,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Foundry",
+                        "bbox": [
+                            0.8197,
+                            0.0665,
+                            0.0555,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Road",
+                        "bbox": [
+                            0.8794,
+                            0.0665,
+                            0.0361,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Riverton,",
+                        "bbox": [
+                            0.7851,
+                            0.0789,
+                            0.0607,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "ST",
+                        "bbox": [
+                            0.85,
+                            0.0789,
+                            0.0193,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "00001",
+                        "bbox": [
+                            0.8735,
+                            0.0789,
+                            0.042,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "SAMPLE",
+                        "bbox": [
+                            0.084,
+                            0.0808,
+                            0.0613,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "DOCUMENT",
+                        "bbox": [
+                            0.1495,
+                            0.0808,
+                            0.0873,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "-",
+                        "bbox": [
+                            0.2411,
+                            0.0808,
+                            0.005,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "FICTIONAL",
+                        "bbox": [
+                            0.2503,
+                            0.0808,
+                            0.079,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "DATA",
+                        "bbox": [
+                            0.3335,
+                            0.0808,
+                            0.0361,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Invoice",
+                        "bbox": [
+                            0.084,
+                            0.1307,
+                            0.0525,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "No:",
+                        "bbox": [
+                            0.1411,
+                            0.1307,
+                            0.0261,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "INV-K-2041",
+                        "bbox": [
+                            0.1711,
+                            0.1307,
+                            0.0864,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Invoice",
+                        "bbox": [
+                            0.084,
+                            0.1485,
+                            0.0525,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Date:",
+                        "bbox": [
+                            0.1411,
+                            0.1485,
+                            0.0401,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "2026-11-03",
+                        "bbox": [
+                            0.1851,
+                            0.1485,
+                            0.0859,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Due",
+                        "bbox": [
+                            0.084,
+                            0.1663,
+                            0.0308,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Date:",
+                        "bbox": [
+                            0.1195,
+                            0.1663,
+                            0.0401,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "2026-12-03",
+                        "bbox": [
+                            0.1635,
+                            0.1663,
+                            0.0859,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "PO",
+                        "bbox": [
+                            0.084,
+                            0.1841,
+                            0.0243,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Number:",
+                        "bbox": [
+                            0.1129,
+                            0.1841,
+                            0.0649,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "PO-1001",
+                        "bbox": [
+                            0.1817,
+                            0.1841,
+                            0.0672,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Vendor:",
+                        "bbox": [
+                            0.084,
+                            0.2019,
+                            0.058,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Kestrel",
+                        "bbox": [
+                            0.1458,
+                            0.2019,
+                            0.0516,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Industrial",
+                        "bbox": [
+                            0.2021,
+                            0.2019,
+                            0.0684,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Parts",
+                        "bbox": [
+                            0.2752,
+                            0.2019,
+                            0.0392,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "LLC",
+                        "bbox": [
+                            0.319,
+                            0.2019,
+                            0.0308,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Bill",
+                        "bbox": [
+                            0.084,
+                            0.2197,
+                            0.0224,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "To:",
+                        "bbox": [
+                            0.1102,
+                            0.2197,
+                            0.0223,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Demo",
+                        "bbox": [
+                            0.1363,
+                            0.2197,
+                            0.0448,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Manufacturing",
+                        "bbox": [
+                            0.1858,
+                            0.2197,
+                            0.106,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Co.",
+                        "bbox": [
+                            0.2965,
+                            0.2197,
+                            0.0255,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Currency:",
+                        "bbox": [
+                            0.084,
+                            0.2376,
+                            0.0728,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "USD",
+                        "bbox": [
+                            0.1606,
+                            0.2376,
+                            0.0355,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Tax",
+                        "bbox": [
+                            0.084,
+                            0.2554,
+                            0.026,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "ID:",
+                        "bbox": [
+                            0.1147,
+                            0.2554,
+                            0.0215,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "88-1234567",
+                        "bbox": [
+                            0.14,
+                            0.2554,
+                            0.0897,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "SKU",
+                        "bbox": [
+                            0.0941,
+                            0.291,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Description",
+                        "bbox": [
+                            0.212,
+                            0.291,
+                            0.0998,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Qty",
+                        "bbox": [
+                            0.593,
+                            0.291,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Unit",
+                        "bbox": [
+                            0.6293,
+                            0.291,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Price",
+                        "bbox": [
+                            0.6746,
+                            0.291,
+                            0.0454,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Amount",
+                        "bbox": [
+                            0.7744,
+                            0.291,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "KIP-1001",
+                        "bbox": [
+                            0.0941,
+                            0.3171,
+                            0.0726,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Hex",
+                        "bbox": [
+                            0.212,
+                            0.3171,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "bolt",
+                        "bbox": [
+                            0.2483,
+                            0.3171,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "M8",
+                        "bbox": [
+                            0.2936,
+                            0.3171,
+                            0.0181,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "x",
+                        "bbox": [
+                            0.3209,
+                            0.3171,
+                            0.0091,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "40,",
+                        "bbox": [
+                            0.339,
+                            0.3171,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "zinc",
+                        "bbox": [
+                            0.3753,
+                            0.3171,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "500",
+                        "bbox": [
+                            0.593,
+                            0.3171,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "0.42",
+                        "bbox": [
+                            0.6837,
+                            0.3171,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "210.00",
+                        "bbox": [
+                            0.7744,
+                            0.3171,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "KIP-1002",
+                        "bbox": [
+                            0.0941,
+                            0.335,
+                            0.0726,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Flange",
+                        "bbox": [
+                            0.212,
+                            0.335,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "nut",
+                        "bbox": [
+                            0.2755,
+                            0.335,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "M8",
+                        "bbox": [
+                            0.3118,
+                            0.335,
+                            0.0181,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "500",
+                        "bbox": [
+                            0.593,
+                            0.335,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "0.18",
+                        "bbox": [
+                            0.6837,
+                            0.335,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "90.00",
+                        "bbox": [
+                            0.7835,
+                            0.335,
+                            0.0454,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "KIP-2040",
+                        "bbox": [
+                            0.0941,
+                            0.3528,
+                            0.0726,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Bearing",
+                        "bbox": [
+                            0.212,
+                            0.3528,
+                            0.0635,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "6204-2RS",
+                        "bbox": [
+                            0.2846,
+                            0.3528,
+                            0.0726,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "40",
+                        "bbox": [
+                            0.6021,
+                            0.3528,
+                            0.0181,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "6.75",
+                        "bbox": [
+                            0.6837,
+                            0.3528,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "270.00",
+                        "bbox": [
+                            0.7744,
+                            0.3528,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Subtotal:",
+                        "bbox": [
+                            0.794,
+                            0.3872,
+                            0.0663,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "570.00",
+                        "bbox": [
+                            0.8642,
+                            0.3872,
+                            0.0514,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Tax",
+                        "bbox": [
+                            0.7989,
+                            0.4062,
+                            0.026,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "(8%):",
+                        "bbox": [
+                            0.8295,
+                            0.4062,
+                            0.0401,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "45.60",
+                        "bbox": [
+                            0.8735,
+                            0.4062,
+                            0.042,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Total:",
+                        "bbox": [
+                            0.8158,
+                            0.4252,
+                            0.0444,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "615.60",
+                        "bbox": [
+                            0.8642,
+                            0.4252,
+                            0.0514,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Please",
+                        "bbox": [
+                            0.3602,
+                            0.9146,
+                            0.0411,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "pay",
+                        "bbox": [
+                            0.405,
+                            0.9146,
+                            0.0213,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "by",
+                        "bbox": [
+                            0.43,
+                            0.9146,
+                            0.0139,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "2026-12-03.",
+                        "bbox": [
+                            0.4476,
+                            0.9146,
+                            0.0725,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Bank",
+                        "bbox": [
+                            0.523,
+                            0.9146,
+                            0.0306,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "details",
+                        "bbox": [
+                            0.5574,
+                            0.9146,
+                            0.0388,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "on",
+                        "bbox": [
+                            0.6,
+                            0.9146,
+                            0.0149,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "file.",
+                        "bbox": [
+                            0.6187,
+                            0.9146,
+                            0.0207,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    }
+                ],
+                "lines": [
+                    {
+                        "text": "INVOICE",
+                        "bbox": [
+                            0.084,
+                            0.0475,
+                            0.1501,
+                            0.0242
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Kestrel Industrial Parts LLC",
+                        "bbox": [
+                            0.6726,
+                            0.0475,
+                            0.2429,
+                            0.0121
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "42 Foundry Road",
+                        "bbox": [
+                            0.7987,
+                            0.0665,
+                            0.1168,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Riverton, ST 00001",
+                        "bbox": [
+                            0.7851,
+                            0.0789,
+                            0.1304,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "SAMPLE DOCUMENT - FICTIONAL DATA",
+                        "bbox": [
+                            0.084,
+                            0.0808,
+                            0.2856,
+                            0.0099
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Invoice No: INV-K-2041",
+                        "bbox": [
+                            0.084,
+                            0.1307,
+                            0.1735,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Invoice Date: 2026-11-03",
+                        "bbox": [
+                            0.084,
+                            0.1485,
+                            0.187,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Due Date: 2026-12-03",
+                        "bbox": [
+                            0.084,
+                            0.1663,
+                            0.1654,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "PO Number: PO-1001",
+                        "bbox": [
+                            0.084,
+                            0.1841,
+                            0.1649,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Vendor: Kestrel Industrial Parts LLC",
+                        "bbox": [
+                            0.084,
+                            0.2019,
+                            0.2658,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Bill To: Demo Manufacturing Co.",
+                        "bbox": [
+                            0.084,
+                            0.2197,
+                            0.238,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Currency: USD",
+                        "bbox": [
+                            0.084,
+                            0.2376,
+                            0.1121,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Tax ID: 88-1234567",
+                        "bbox": [
+                            0.084,
+                            0.2554,
+                            0.1457,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "SKU",
+                        "bbox": [
+                            0.0941,
+                            0.291,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Description",
+                        "bbox": [
+                            0.212,
+                            0.291,
+                            0.0998,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Qty Unit Price",
+                        "bbox": [
+                            0.593,
+                            0.291,
+                            0.127,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Amount",
+                        "bbox": [
+                            0.7744,
+                            0.291,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "KIP-1001",
+                        "bbox": [
+                            0.0941,
+                            0.3171,
+                            0.0726,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Hex bolt M8 x 40, zinc",
+                        "bbox": [
+                            0.212,
+                            0.3171,
+                            0.1996,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "500",
+                        "bbox": [
+                            0.593,
+                            0.3171,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "0.42",
+                        "bbox": [
+                            0.6837,
+                            0.3171,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "210.00",
+                        "bbox": [
+                            0.7744,
+                            0.3171,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "KIP-1002",
+                        "bbox": [
+                            0.0941,
+                            0.335,
+                            0.0726,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Flange nut M8",
+                        "bbox": [
+                            0.212,
+                            0.335,
+                            0.1179,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "500",
+                        "bbox": [
+                            0.593,
+                            0.335,
+                            0.0272,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "0.18",
+                        "bbox": [
+                            0.6837,
+                            0.335,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "90.00",
+                        "bbox": [
+                            0.7835,
+                            0.335,
+                            0.0454,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "KIP-2040",
+                        "bbox": [
+                            0.0941,
+                            0.3528,
+                            0.0726,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Bearing 6204-2RS",
+                        "bbox": [
+                            0.212,
+                            0.3528,
+                            0.1452,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "40",
+                        "bbox": [
+                            0.6021,
+                            0.3528,
+                            0.0181,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "6.75",
+                        "bbox": [
+                            0.6837,
+                            0.3528,
+                            0.0363,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "270.00",
+                        "bbox": [
+                            0.7744,
+                            0.3528,
+                            0.0544,
+                            0.0084
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Subtotal: 570.00",
+                        "bbox": [
+                            0.794,
+                            0.3872,
+                            0.1216,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Tax (8%): 45.60",
+                        "bbox": [
+                            0.7989,
+                            0.4062,
+                            0.1166,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Total: 615.60",
+                        "bbox": [
+                            0.8158,
+                            0.4252,
+                            0.0998,
+                            0.011
+                        ],
+                        "confidence": 1
+                    },
+                    {
+                        "text": "Please pay by 2026-12-03. Bank details on file.",
+                        "bbox": [
+                            0.3602,
+                            0.9146,
+                            0.2792,
+                            0.0088
+                        ],
+                        "confidence": 1
+                    }
+                ],
+                "key_values": [
+                    {
+                        "key": "Invoice No",
+                        "value": "INV-K-2041",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.1307,
+                            0.0832,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1711,
+                            0.1307,
+                            0.0864,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Invoice Date",
+                        "value": "2026-11-03",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.1485,
+                            0.0972,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1851,
+                            0.1485,
+                            0.0859,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Due Date",
+                        "value": "2026-12-03",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.1663,
+                            0.0756,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1635,
+                            0.1663,
+                            0.0859,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "PO Number",
+                        "value": "PO-1001",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.1841,
+                            0.0938,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1817,
+                            0.1841,
+                            0.0672,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Vendor",
+                        "value": "Kestrel Industrial Parts LLC",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.2019,
+                            0.058,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1458,
+                            0.2019,
+                            0.204,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Bill To",
+                        "value": "Demo Manufacturing Co.",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.2197,
+                            0.0485,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1363,
+                            0.2197,
+                            0.1857,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Currency",
+                        "value": "USD",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.2376,
+                            0.0728,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.1606,
+                            0.2376,
+                            0.0355,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Tax ID",
+                        "value": "88-1234567",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.084,
+                            0.2554,
+                            0.0522,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.14,
+                            0.2554,
+                            0.0897,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Subtotal",
+                        "value": "570.00",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.794,
+                            0.3872,
+                            0.0663,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.8642,
+                            0.3872,
+                            0.0514,
+                            0.011
+                        ]
+                    },
+                    {
+                        "key": "Total",
+                        "value": "615.60",
+                        "confidence": 1,
+                        "key_bbox": [
+                            0.8158,
+                            0.4252,
+                            0.0444,
+                            0.011
+                        ],
+                        "value_bbox": [
+                            0.8642,
+                            0.4252,
+                            0.0514,
+                            0.011
+                        ]
+                    }
+                ],
+                "tables": []
+            }
+        }
+    ]
+}

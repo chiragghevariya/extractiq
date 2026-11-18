@@ -1,0 +1,13 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 5
+    paths:
+        - app
+        - routes
+        - database
+    tmpDir: storage/framework/phpstan
+    # Framework PHPDoc isn't always exact (e.g. Sanctum's currentAccessToken() is a
+    # TransientToken for SPA session requests), so don't treat PHPDoc types as proven.
+    treatPhpDocTypesAsCertain: false

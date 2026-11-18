@@ -1,0 +1,126 @@
+{
+    "vendor": {
+        "name": {
+            "value": "Brightline Office Supply Co",
+            "confidence": 0.96,
+            "source": [
+                "p1.l9"
+            ]
+        },
+        "tax_id": {
+            "value": "77-7654321",
+            "confidence": 0.96,
+            "source": [
+                "p1.l12"
+            ]
+        },
+        "address": {
+            "value": null,
+            "confidence": 0,
+            "source": []
+        },
+        "email": {
+            "value": null,
+            "confidence": 0,
+            "source": []
+        }
+    },
+    "invoice_number": {
+        "value": "INV-BL-7790",
+        "confidence": 0.96,
+        "source": [
+            "p1.l5"
+        ]
+    },
+    "invoice_date": {
+        "value": "2026-11-12",
+        "confidence": 0.96,
+        "source": [
+            "p1.l6"
+        ]
+    },
+    "due_date": {
+        "value": "2026-12-12",
+        "confidence": 0.96,
+        "source": [
+            "p1.l7"
+        ]
+    },
+    "po_number": {
+        "value": "PO-1002",
+        "confidence": 0.96,
+        "source": [
+            "p1.l8"
+        ]
+    },
+    "currency": {
+        "value": "USD",
+        "confidence": 0.96,
+        "source": [
+            "p1.l11"
+        ]
+    },
+    "subtotal": {
+        "value": 578,
+        "confidence": 0.96,
+        "source": [
+            "p1.l22"
+        ]
+    },
+    "tax_total": {
+        "value": 46.24,
+        "confidence": 0.96,
+        "source": [
+            "p1.l23"
+        ]
+    },
+    "shipping": {
+        "value": null,
+        "confidence": 0,
+        "source": []
+    },
+    "total": {
+        "value": 674.24,
+        "confidence": 0.96,
+        "source": [
+            "p1.l24"
+        ]
+    },
+    "payment_terms": {
+        "value": null,
+        "confidence": 0,
+        "source": []
+    },
+    "bank": {
+        "account": {
+            "value": null,
+            "confidence": 0,
+            "source": []
+        },
+        "swift": {
+            "value": null,
+            "confidence": 0,
+            "source": []
+        }
+    },
+    "line_items": [
+        {
+            "line_no": 1,
+            "sku": "BL-CHR-ERG",
+            "description": "Ergonomic task chair",
+            "qty": 2,
+            "uom": null,
+            "unit_price": 289,
+            "tax_rate": null,
+            "amount": 578,
+            "confidence": 0.96,
+            "source": [
+                "p1.l17",
+                "p1.l18",
+                "p1.l19",
+                "p1.l20",
+                "p1.l21"
+            ]
+        }
+    ]
+}
